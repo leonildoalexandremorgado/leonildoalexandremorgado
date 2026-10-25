@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Reading Diagnostic & Cohort Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased p-6">
+
+    <div class="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-xl">
+
+        <!-- HEADER -->
+        <div id="header-area" class="mb-8">
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                Diagnostic Placement & Cohort Grouping
+            </span>
+            <h1 class="text-2xl font-bold mt-3">Reading & Comprehension Diagnostic</h1>
+            <p class="text-slate-400 text-sm mt-1">Complete the adaptive reading tasks below (~3 minutes). The engine dynamically evaluates reading comprehension and processing speed to place you into a balanced collaborative cohort.</p>
+        </div>
+
+        <!-- ASSESSMENT CONTAINER -->
+        <div id="quiz-container">
+            <!-- Question rendered dynamically -->
+        </div>
+
+        <!-- RESULTS CONTAINER -->
+        <div id="results-container" class="hidden">
+            <div class="text-center py-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 mb-4 border border-emerald-500/20">
+                    ✓
+                </div>
+                <h2 class="text-2xl font-bold text-white">Diagnostic Completed Successfully</h2>
+                <p class="text-slate-300 text-sm mt-2 max-w-md mx-auto">
+                    Your reading profile and latency metrics have been processed. You have been assigned to an optimized peer cohort for upcoming collaborative task cycles.
+                </p>
+            </div>
+
+            <div class="mt-8 bg-slate-800/50 border border-slate-700/60 rounded-xl p-6">
+                <h3 class="font-bold text-indigo-300 mb-3 text-lg">Your Assigned Collaborative Cohort (Team B-2)</h3>
+                <p class="text-sm text-slate-300 mb-4">
+                    Balanced to maximize peer scaffolding (ZPD) with a heterogeneous mix of proficiency and processing profiles:
+                </p>
+                <ul class="space-y-2 text-sm text-slate-300">
+                    <li class="flex items-center justify-between bg-slate-900/60 px-4 py-2.5 rounded-lg border border-slate-800">
+                        <span>Partner 1 (Peer Mentor)</span>
+                        <span class="text-xs text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">Advanced Scaffold</span>
+                    </li>
+                    <li class="flex items-center justify-between bg-slate-900/60 px-4 py-2.5 rounded-lg border border-slate-800">
+                        <span><strong>You (Active Contributor)</strong></span>
+                        <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">Calibrated Fit</span>
+                    </li>
+                    <li class="flex items-center justify-between bg-slate-900/60 px-4 py-2.5 rounded-lg border border-slate-800">
+                        <span>Partner 3 (Collaborative Peer)</span>
+                        <span class="text-xs text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">Peer Partner</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button onclick="location.reload()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-6 py-2.5 rounded-lg text-sm transition">
+                    Restart Diagnostic Simulator
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const questions = [
+            {
+                skill: "Reading Comprehension",
+                level: "Foundational (Tier 1)",
+                prompt: "Read the notice: 'Library hours are extended until 8:00 PM during exam week.' What does this mean?",
+                options: [
+                    "The library closes earlier than usual during exams.",
+                    "Students can stay and study later during exam week.",
+                    "The library is closed all week for exams."
+                ],
+                correct: 1
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Foundational (Tier 1)",
+                prompt: "Read the email: 'Please submit your draft by Friday morning so we can review it before class.' When is the deadline?",
+                options: [
+                    "Friday morning",
+                    "Monday afternoon",
+                    "Thursday evening"
+                ],
+                correct: 0
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Foundational (Tier 1)",
+                prompt: "Read the instruction: 'Ensure all equipment is powered off before exiting the room.' What should you do before leaving?",
+                options: [
+                    "Turn off all equipment.",
+                    "Leave the lights on.",
+                    "Lock the door."
+                ],
+                correct: 0
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Intermediate (Tier 2)",
+                prompt: "Read the excerpt: 'Despite initial delays in data collection, the research team successfully synthesized qualitative findings before the deadline.' Which word best captures the core outcome?",
+                options: ["Failure", "Success", "Postponement"],
+                correct: 1
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Intermediate (Tier 2)",
+                prompt: "Read the passage: 'Although the new policy aims to reduce paper usage, many department chairs continue to print weekly reports.' What is the author implying?",
+                options: [
+                    "The policy has completely eliminated paper waste.",
+                    "Faculty compliance with the new policy is incomplete.",
+                    "Paper reports are no longer used in any department."
+                ],
+                correct: 1
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Advanced (Tier 3)",
+                prompt: "Read the abstract sentence: 'The methodology utilized a dual-coding paradigm to isolate extraneous cognitive load.' What does 'isolate' mean in this context?",
+                options: [
+                    "To separate and study independently",
+                    "To completely ignore and delete",
+                    "To combine into a single variable"
+                ],
+                correct: 0
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Advanced (Tier 3)",
+                prompt: "Evaluate the statement: 'While prior models emphasize rote retention, contemporary SLA paradigms privilege negotiated interaction.' What is the author asserting?",
+                options: [
+                    "Memorization is superior to interaction.",
+                    "Modern theories value interactive dialogue over simple memorization.",
+                    "Both models are entirely identical in practice."
+                ],
+                correct: 1
+            },
+            {
+                skill: "Reading Comprehension",
+                level: "Advanced (Tier 3)",
+                prompt: "Read the conclusion: 'The empirical evidence remains equivocal, necessitating further longitudinal research before reaching definitive conclusions.' What is the current state of the evidence?",
+                options: [
+                    "Completely proven beyond doubt.",
+                    "Unclear or open to interpretation.",
+                    "Disproven and rejected."
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let startTime = 0;
+        let responseMetrics = [];
+
+        function renderQuestion() {
+            const container = document.getElementById("quiz-container");
+            if (currentQuestion >= questions.length) {
+                console.log("Diagnostic complete. Latency metrics logged:", responseMetrics);
+                document.getElementById("header-area").classList.add("hidden");
+                container.classList.add("hidden");
+                document.getElementById("results-container").classList.remove("hidden");
+                return;
+            }
+
+            startTime = Date.now();
+            const q = questions[currentQuestion];
+            let html = `
+                <div class="mb-4 flex items-center justify-between text-xs text-slate-400">
+                    <span class="bg-slate-800 px-2.5 py-1 rounded-md text-indigo-300 font-medium">${q.skill}</span>
+                    <span>Step ${currentQuestion + 1} of ${questions.length}</span>
+                </div>
+                <h3 class="text-lg font-semibold text-white mb-4">${q.prompt}</h3>
+                <div class="space-y-3">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `
+                    <button onclick="handleAnswer(${idx})" class="w-full text-left bg-slate-800/40 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/50 p-4 rounded-xl text-sm transition text-slate-200">
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function handleAnswer(selectedIdx) {
+            const endTime = Date.now();
+            const latencySeconds = (endTime - startTime) / 1000;
+            const q = questions[currentQuestion];
+            const isCorrect = (selectedIdx === q.correct);
+
+            responseMetrics.push({
+                questionIndex: currentQuestion,
+                correct: isCorrect,
+                latency: latencySeconds
+            });
+
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        renderQuestion();
+    </script>
+</body>
+</html>
