@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic & Instructional Design Portfolio</title>
+    <!-- Tailwind CSS CDN for zero-setup, modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="font-bold text-xl tracking-tight text-indigo-400">MSEd TESOL & EdTech</span>
+            <div class="space-x-6 text-sm font-medium">
+                <a href="#philosophy" class="hover:text-indigo-400 transition">Philosophy</a>
+                <a href="#flagship" class="hover:text-indigo-400 transition">H5P Cohort Engine</a>
+                <a href="#artifacts" class="hover:text-indigo-400 transition">Artifacts</a>
+                <a href="#cv" class="hover:text-indigo-400 transition">CV</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO / TEACHING PHILOSOPHY SECTION -->
+    <section id="philosophy" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
+        <div class="max-w-3xl">
+            <span class="inline-block py-1 px-3 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
+                Research & Technology Integration
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+                Bridging SLA Research & EdTech to Optimize Educational Outcomes
+            </h1>
+            <p class="text-slate-300 text-lg leading-relaxed mb-6">
+                Rooted in Second Language Acquisition theories and Task-Based Language Teaching (TBLT), my pedagogical approach leverages interactive technology to reduce cognitive load, create reactive assessment feedback loops, and foster collaborative learning environments.
+            </p>
+            <div class="flex gap-4">
+                <a href="#flagship" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-lg font-medium transition shadow-lg shadow-indigo-600/20">
+                    View H5P Flagship Artifact
+                </a>
+                <a href="#cv" class="border border-slate-700 hover:bg-slate-800 text-slate-300 px-5 py-2.5 rounded-lg font-medium transition">
+                    Read Teaching Philosophy & CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLAGSHIP ARTIFACT SECTION -->
+    <section id="flagship" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
+        <div class="mb-10">
+            <span class="text-indigo-400 font-semibold text-sm tracking-wider uppercase">Interactive Showcase</span>
+            <h2 class="text-3xl font-bold mt-1">Response-Reactive Diagnostic & Cohort Grouping Engine</h2>
+            <p class="text-slate-400 mt-2 max-w-2xl">
+                An interactive H5P module that evaluates learner proficiency in real time, routes students through dynamic diagnostic pathways, and algorithmically outputs balanced cohorts for collaborative group activities.
+            </p>
+        </div>
+
+        <!-- LIVE DEMO CONTAINER (IFRAME EMBED) -->
+        <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-2xl mb-12">
+            <div class="bg-slate-900/50 px-4 py-3 border-b border-slate-700 flex items-center justify-between">
+                <span class="text-xs font-mono text-slate-400">Live Interactive Demonstration</span>
+                <span class="inline-flex items-center gap-1.5 text-xs text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sandbox Active
+                </span>
+            </div>
+            <div class="p-4 bg-slate-950 flex justify-center items-center min-h-[450px]">
+                <!-- REPLACE THE IFRAME SRC WITH YOUR EMBED URL OR LOCAL H5P EMBED FILE -->
+                <iframe src="https://h5p.org/h5p/embed/61242" width="100%" height="450" frameborder="0" allowfullscreen="allowfullscreen" title="Interactive Video"></iframe>
+            </div>
+        </div>
+
+        <!-- CASE STUDY / TECHNICAL BREAKDOWN -->
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-xl">
+                <h3 class="font-bold text-indigo-300 mb-2">1. Response-Reactive Branching</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Uses multi-branch decision trees to dynamically adapt task difficulty based on real-time learner inputs, reducing test anxiety while capturing granular proficiency markers.
+                </p>
+            </div>
+            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-xl">
+                <h3 class="font-bold text-indigo-300 mb-2">2. Hierarchical Scoring</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Evaluates task performance across discrete linguistic and communicative metrics rather than simple pass/fail outcomes, generating multi-dimensional skill profiles.
+                </p>
+            </div>
+            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-xl">
+                <h3 class="font-bold text-indigo-300 mb-2">3. Cohort Balancing Algorithm</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Automatically pairs and groups learners into heterogenous or homogenous cohorts optimized for peer scaffolding during subsequent communicative tasks.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADDITIONAL ARTIFACTS GRID -->
+    <section id="artifacts" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
+        <h2 class="text-3xl font-bold mb-8">Instructional Design & TBLT Artifacts</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-800/30 border border-slate-700/80 p-6 rounded-xl">
+                <h3 class="text-xl font-bold mb-2">Task-Based Language Teaching (TBLT) Frameworks</h3>
+                <p class="text-slate-400 text-sm mb-4">Interactive quest logs, two-way information-gap maps, and authentic communicative task cycles designed for maximum learner engagement.</p>
+                <a href="#" class="text-indigo-400 text-sm font-semibold hover:underline">Explore Curriculum Framework &rarr;</a>
+            </div>
+            <div class="bg-slate-800/30 border border-slate-700/80 p-6 rounded-xl">
+                <h3 class="text-xl font-bold mb-2">SLA Assessment & Diagnostic Tooling</h3>
+                <p class="text-slate-400 text-sm mb-4">Formative assessment instruments aligning institutional outcomes with second language acquisition milestones.</p>
+                <a href="#" class="text-indigo-400 text-sm font-semibold hover:underline">View Assessment Materials &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV & CONTACT -->
+    <section id="cv" class="max-w-6xl mx-auto px-6 py-20">
+        <h2 class="text-3xl font-bold mb-6">Curriculum Vitae & Research Focus</h2>
+        <div class="bg-slate-800/40 border border-slate-700 p-8 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div>
+                <h3 class="text-2xl font-bold">MSEd Candidate in TESOL</h3>
+                <p class="text-slate-400 mt-1">Specializing in EdTech Integration, Instructional Design, and Task-Based Language Teaching.</p>
+            </div>
+            <a href="#" class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-lg font-medium transition whitespace-nowrap">
+                Download PDF CV
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 text-center py-8 text-xs text-slate-500">
+        Hosted on GitHub Pages • Built with HTML5 & Tailwind CSS
+    </footer>
+
+</body>
+</html>
