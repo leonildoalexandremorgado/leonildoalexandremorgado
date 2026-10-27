@@ -292,6 +292,10 @@
             .then(res => {
                 alert(res.message);
                 if (res.status === "success") instructorLogin();
+            })
+            .catch(err => {
+                alert("Connection error during registration. Check your Web App URL.");
+                console.error(err);
             });
         }
 
@@ -317,8 +321,12 @@
                     document.getElementById('inst-dashboard-content').classList.remove('hidden');
                     loadDashboardData();
                 } else {
-                    alert(res.message);
+                    alert(res.message || "Login failed.");
                 }
+            })
+            .catch(err => {
+                alert("Connection error during login. Check your Web App URL.");
+                console.error(err);
             });
         }
 
