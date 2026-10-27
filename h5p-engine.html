@@ -53,7 +53,7 @@
                     </div>
                     <h2 class="text-2xl font-bold text-white">Diagnostic Submitted Successfully</h2>
                     <p class="text-slate-300 text-sm mt-2 max-w-md mx-auto">
-                        Your profile and latency metrics have been recorded. Your cohort results will be emailed to you automatically once all class members have finished.
+                        Your profile and latency metrics have been recorded. Your cohort results will be balanced and emailed to you automatically once cohorts are released.
                     </p>
                 </div>
             </div>
@@ -88,15 +88,45 @@
                 </div>
             </div>
 
-            <!-- INSTRUCTOR DASHBOARD CONTENT (Hidden until logged in) -->
+            <!-- INSTRUCTOR DASHBOARD CONTENT -->
             <div id="inst-dashboard-content" class="hidden space-y-8">
                 <!-- CREATE INSTANCE CARD -->
                 <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold text-indigo-300">Create New Quiz Instance</h3>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1">Quiz Name / Course Title</label>
-                        <input type="text" id="new-quiz-name" placeholder="e.g. EAP 301 Midterm Diagnostic" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Quiz Name / Course Title</label>
+                            <input type="text" id="new-quiz-name" placeholder="e.g. EAP 301 Midterm Diagnostic" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">CEFR Proficiency Level</label>
+                            <select id="new-quiz-cefr" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                                <option value="Pre-A0">Pre-A0 (Absolute Beginner / Alphabet & Greetings)</option>
+                                <option value="A0">A0 (Breakthrough / Basic Survival)</option>
+                                <option value="A1" selected>A1 (Waystage / Elementary)</option>
+                                <option value="A2">A2 (Waypoint / Pre-Intermediate)</option>
+                                <option value="B1">B1 (Threshold / Intermediate)</option>
+                                <option value="B2">B2 (Vantage / Upper-Intermediate)</option>
+                                <option value="C1">C1 (Effective Operational Proficiency)</option>
+                                <option value="C2">C2 (Mastery / Proficient)</option>
+                            </select>
+                        </div>
                     </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Cohort Sizing Mode</label>
+                            <select id="new-quiz-mode" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                                <option value="max_size">Max Students Per Team</option>
+                                <option value="target_count">Target Number of Teams</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Cohort Sizing Parameter Value</label>
+                            <input type="number" id="new-quiz-param" value="4" min="1" max="50" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 mb-1">Pre-authorized Student Emails (Comma-separated)</label>
                         <textarea id="new-quiz-emails" placeholder="student1@uni.edu, student2@uni.edu, student3@uni.edu" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500"></textarea>
@@ -136,22 +166,96 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxbrJSeviejGCcF7WG2B8pLIec1EjVHiFv49DSjoGBie1CbqfOkYlfgQZ1chd-P206FxQ/exec";
+        const SCRIPT_URL = "https://docs.google.com/document/d/1U8iTSnv7bqHu15elw_wjLccmstdgLWjoSunqKuzyHTM/edit?tab=t.0";
 
         let currentInstructor = null;
         let activeQuizId = null;
         let studentEmail = null;
+        let activeCefrLevel = "A1";
 
-        const questions = [
-            { prompt: "Read the notice: 'Library hours are extended until 8:00 PM during exam week.' What does this mean?", options: ["The library closes earlier than usual during exams.", "Students can stay and study later during exam week.", "The library is closed all week for exams."], correct: 1 },
-            { prompt: "Read the email: 'Please submit your draft by Friday morning so we can review it before class.' When is the deadline?", options: ["Friday morning", "Monday afternoon", "Thursday evening"], correct: 0 },
-            { prompt: "Read the instruction: 'Ensure all equipment is powered off before exiting the room.' What should you do before leaving?", options: ["Turn off all equipment.", "Leave the lights on.", "Lock the door."], correct: 0 },
-            { prompt: "Read the excerpt: 'Despite initial delays in data collection, the research team successfully synthesized qualitative findings before the deadline.' Which word best captures the core outcome?", options: ["Failure", "Success", "Postponement"], correct: 1 },
-            { prompt: "Read the passage: 'Although the new policy aims to reduce paper usage, many department chairs continue to print weekly reports.' What is the author implying?", options: ["The policy has completely eliminated paper waste.", "Faculty compliance with the new policy is incomplete.", "Paper reports are no longer used in any department."], correct: 1 },
-            { prompt: "Read the abstract sentence: 'The methodology utilized a dual-coding paradigm to isolate extraneous cognitive load.' What does 'isolate' mean in this context?", options: ["To separate and study independently", "To completely ignore and delete", "To combine into a single variable"], correct: 0 },
-            { prompt: "Evaluate the statement: 'While prior models emphasize rote retention, contemporary SLA paradigms privilege negotiated interaction.' What is the author asserting?", options: ["Memorization is superior to interaction.", "Modern theories value interactive dialogue over simple memorization.", "Both models are entirely identical in practice."], correct: 1 },
-            { prompt: "Read the conclusion: 'The empirical evidence remains equivocal, necessitating further longitudinal research before reaching definitive conclusions.' What is the current state of the evidence?", options: ["Completely proven beyond doubt.", "Unclear or open to interpretation.", "Disproven and rejected."], correct: 1 }
-        ];
+        // --- CEFR-TIERED QUESTION BANKS ---
+        const cefrQuestions = {
+            "Pre-A0": [
+                { prompt: "Identify the letter that comes after 'A':", options: ["B", "C", "Z"], correct: 0 },
+                { prompt: "Choose the correct greeting for the morning:", options: ["Good night", "Good morning", "Goodbye"], correct: 1 },
+                { prompt: "What color is a standard ripe banana?", options: ["Blue", "Yellow", "Red"], correct: 1 },
+                { prompt: "How many fingers are on one human hand?", options: ["3", "5", "10"], correct: 1 },
+                { prompt: "Select the number 'three':", options: ["1", "3", "8"], correct: 1 },
+                { prompt: "Which is a domestic animal?", options: ["Lion", "Cat", "Shark"], correct: 1 },
+                { prompt: "Choose the word for a vehicle with four wheels:", options: ["Car", "Boat", "Plane"], correct: 0 },
+                { prompt: "What do you use to write on paper?", options: ["Pencil", "Fork", "Spoon"], correct: 0 }
+            ],
+            "A0": [
+                { prompt: "Complete the sentence: 'My name ___ John.'", options: ["is", "are", "am"], correct: 0 },
+                { prompt: "Which word means 'thank you' in Japanese context?", options: ["Hello", "Arigato", "Goodbye"], correct: 1 },
+                { prompt: "Choose the correct pronoun: '___ is a teacher.' (female)", options: ["He", "She", "It"], correct: 1 },
+                { prompt: "Where do you buy food?", options: ["Library", "Supermarket", "Hospital"], correct: 1 },
+                { prompt: "What time is 12:00 PM?", options: ["Midnight", "Noon", "Morning"], correct: 1 },
+                { prompt: "Choose the plural of 'apple':", options: ["apples", "applez", "applies"], correct: 0 },
+                { prompt: "Complete: 'Where ___ you from?'", options: ["is", "are", "am"], correct: 1 },
+                { prompt: "Which day comes after Monday?", options: ["Sunday", "Tuesday", "Friday"], correct: 1 }
+            ],
+            "A1": [
+                { prompt: "Read the notice: 'Library hours are extended until 8:00 PM during exam week.' What does this mean?", options: ["The library closes earlier than usual.", "Students can stay and study later.", "The library is closed all week."], correct: 1 },
+                { prompt: "Read the email: 'Please submit your draft by Friday morning.' When is the deadline?", options: ["Friday morning", "Monday afternoon", "Thursday evening"], correct: 0 },
+                { prompt: "Read: 'Ensure all equipment is powered off before exiting.' What should you do?", options: ["Turn off equipment.", "Leave lights on.", "Lock the door."], correct: 0 },
+                { prompt: "Choose the correct past tense of 'go':", options: ["goed", "went", "gone"], correct: 1 },
+                { prompt: "Complete: 'She doesn't ___ coffee in the morning.'", options: ["drink", "drinks", "drank"], correct: 0 },
+                { prompt: "Which word is an adjective?", options: ["Quickly", "Beautiful", "Run"], correct: 1 },
+                { prompt: "Choose the correct preposition: 'The book is ___ the table.'", options: ["on", "in", "at"], correct: 0 },
+                { prompt: "What is the opposite of 'expensive'?", options: ["Cheap", "Large", "Old"], correct: 0 }
+            ],
+            "A2": [
+                { prompt: "Read the memo: 'Due to scheduled maintenance, the elevator will be out of service until noon.' What is affected?", options: ["The stairs", "The elevator", "The parking lot"], correct: 1 },
+                { prompt: "Choose the correct comparative form: 'This car is ___ than that one.'", options: ["fast", "faster", "fastest"], correct: 1 },
+                { prompt: "Complete: 'If it rains tomorrow, we ___ stay indoors.'", options: ["will", "would", "did"], correct: 0 },
+                { prompt: "What does 'postpone' mean?", options: ["To cancel permanently", "To delay to a later time", "To finish early"], correct: 1 },
+                { prompt: "Choose the correct modal for obligation: 'You ___ wear a helmet when cycling.'", options: ["should", "might", "can"], correct: 0 },
+                { prompt: "Identify the conjunction in: 'I wanted to go, but it was raining.'", options: ["wanted", "but", "raining"], correct: 1 },
+                { prompt: "Complete: 'Have you ever ___ to Canada?'", options: ["be", "been", "go"], correct: 1 },
+                { prompt: "What is a synonym for 'assist'?", options: ["Help", "Hinder", "Ignore"], correct: 0 }
+            ],
+            "B1": [
+                { prompt: "Read the excerpt: 'Despite initial delays, the team successfully synthesized qualitative findings.' What was the outcome?", options: ["Failure", "Success", "Postponement"], correct: 1 },
+                { prompt: "Complete: 'By the time we arrived, the movie ___.'", options: ["started", "had started", "has started"], correct: 1 },
+                { prompt: "What does 'ambiguous' mean?", options: ["Clear and precise", "Open to multiple interpretations", "Completely false"], correct: 1 },
+                { prompt: "Choose the correct passive voice: 'The report ___ by the manager yesterday.'", options: ["was written", "wrote", "is writing"], correct: 0 },
+                { prompt: "Complete: 'I wish I ___ more time to finish the project.'", options: ["have", "had", "will have"], correct: 1 },
+                { prompt: "What is the meaning of 'feasible'?", options: ["Impossible", "Practical and achievable", "Expensive"], correct: 1 },
+                { prompt: "Choose the correct relative pronoun: 'The student ___ won the award is in my class.'", options: ["which", "who", "whose"], correct: 1 },
+                { prompt: "What does 'mitigate' imply?", options: ["To make worse", "To lessen severity", "To ignore completely"], correct: 1 }
+            ],
+            "B2": [
+                { prompt: "Read the passage: 'Although the policy aims to reduce paper usage, many department chairs continue printing weekly reports.' What is implied?", options: ["Paper waste is eliminated.", "Faculty compliance is incomplete.", "Printers are broken."], correct: 1 },
+                { prompt: "Choose the correct idiom for starting something new: 'Let's ___ from scratch.'", options: ["start", "begin", "initiate"], correct: 0 },
+                { prompt: "Complete: 'Scarcely had she entered the room ___ the phone rang.'", options: ["when", "than", "then"], correct: 0 },
+                { prompt: "What does 'ubiquitous' mean?", options: ["Rare and hidden", "Found everywhere", "Extremely dangerous"], correct: 1 },
+                { prompt: "Choose the correct subjunctive form: 'It is crucial that he ___ present at the meeting.'", options: ["is", "be", "was"], correct: 1 },
+                { prompt: "What is a synonym for 'comprehensive'?", options: ["Superficial", "Thorough and inclusive", "Brief"], correct: 1 },
+                { prompt: "Complete: 'Hardly ___ know what to say when I heard the news.'", options: ["I did", "did I", "I could"], correct: 1 },
+                { prompt: "What does 'pragmatic' signify?", options: ["Dealing with things sensibly and realistically", "Acting purely on emotion", "Theoretical and abstract"], correct: 0 }
+            ],
+            "C1": [
+                { prompt: "Read the abstract: 'The methodology utilized a dual-coding paradigm to isolate extraneous cognitive load.' What does 'isolate' mean here?", options: ["To separate and study independently", "To completely ignore", "To combine variables"], correct: 0 },
+                { prompt: "Evaluate: 'While prior models emphasize rote retention, contemporary SLA paradigms privilege negotiated interaction.' What is asserted?", options: ["Memorization is superior.", "Modern theories value interactive dialogue.", "Both models are identical."], correct: 1 },
+                { prompt: "What does 'mitigating circumstance' denote?", options: ["A factor that excuses or lessens blameworthiness", "An aggravating factor", "A complete roadblock"], correct: 0 },
+                { prompt: "Choose the correct inversion: 'Not only ___ the deadline, but he also exceeded expectations.'", options: ["he met", "did he meet", "met he"], correct: 1 },
+                { prompt: "What does 'esoteric' mean?", options: ["Understood by only a small specialized audience", "Common knowledge", "Outdated"], correct: 0 },
+                { prompt: "Complete: 'Such was the intensity of the debate ___ consensus was reached.'", options: ["that no", "than no", "as no"], correct: 0 },
+                { prompt: "What is the connotation of 'ephemeral'?", options: ["Lasting for a very short time", "Eternal", "Solid and robust"], correct: 0 },
+                { prompt: "What does 'concomitant' mean?", options: ["Naturallly accompanying or corresponding", "Opposing", "Sequential"], correct: 0 }
+            ],
+            "C2": [
+                { prompt: "Read the conclusion: 'The empirical evidence remains equivocal, necessitating further longitudinal research.' What is the state of the evidence?", options: ["Completely proven.", "Unclear or open to interpretation.", "Disproven."], correct: 1 },
+                { prompt: "What does 'perspicacious' signify?", options: ["Having a ready insight into things; astute", "Dull and unobservant", "Overly emotional"], correct: 0 },
+                { prompt: "Choose the correct collocation: 'His speech was replete ___ academic jargon.'", options: ["with", "of", "in"], correct: 0 },
+                { prompt: "What does 'pusillanimous' mean?", options: ["Showing a lack of courage or determination; timid", "Brave and bold", "Generous"], correct: 0 },
+                { prompt: "Complete: 'No sooner had the manuscript been published ___ it received critical acclaim.'", options: ["than", "when", "then"], correct: 0 },
+                { prompt: "What is the meaning of 'mendacious'?", options: ["Truthful", "Not telling the truth; lying", "Healing"], correct: 1 },
+                { prompt: "What does 'trenchant' analysis imply?", options: ["Vigorous or incisive in expression or style", "Weak and meandering", "Superficial"], correct: 0 },
+                { prompt: "What does 'obstreperous' describe?", options: ["Noisy and difficult to control", "Quiet and compliant", "Transparent"], correct: 0 }
+            ]
+        };
 
         let currentQuestion = 0;
         let startTime = 0;
@@ -189,8 +293,12 @@
                     if (res.status === "success") {
                         activeQuizId = quizId;
                         studentEmail = email;
+                        activeCefrLevel = res.cefrLevel || "A1";
                         document.getElementById('student-auth-container').classList.add('hidden');
                         document.getElementById('quiz-container').classList.remove('hidden');
+                        currentQuestion = 0;
+                        score = 0;
+                        responseMetrics = [];
                         renderQuestion();
                     } else {
                         alert(res.message);
@@ -201,17 +309,19 @@
 
         function renderQuestion() {
             const container = document.getElementById("quiz-container");
-            if (currentQuestion >= questions.length) {
+            const qList = cefrQuestions[activeCefrLevel] || cefrQuestions["A1"];
+            
+            if (currentQuestion >= qList.length) {
                 finishStudentQuiz();
                 return;
             }
 
             startTime = Date.now();
-            const q = questions[currentQuestion];
+            const q = qList[currentQuestion];
             let html = `
                 <div class="mb-4 flex items-center justify-between text-xs text-slate-400">
-                    <span class="bg-slate-800 px-2.5 py-1 rounded-md text-indigo-300 font-medium">Reading Diagnostic</span>
-                    <span>Step ${currentQuestion + 1} of ${questions.length}</span>
+                    <span class="bg-slate-800 px-2.5 py-1 rounded-md text-indigo-300 font-medium">Diagnostic Level: ${activeCefrLevel}</span>
+                    <span>Step ${currentQuestion + 1} of ${qList.length}</span>
                 </div>
                 <h3 class="text-lg font-semibold text-white mb-4">${q.prompt}</h3>
                 <div class="space-y-3">
@@ -232,7 +342,8 @@
         function handleAnswer(selectedIdx) {
             const endTime = Date.now();
             const latencySeconds = (endTime - startTime) / 1000;
-            const q = questions[currentQuestion];
+            const qList = cefrQuestions[activeCefrLevel] || cefrQuestions["A1"];
+            const q = qList[currentQuestion];
             const isCorrect = (selectedIdx === q.correct);
 
             if (isCorrect) score++;
@@ -248,11 +359,7 @@
             document.getElementById("results-container").classList.remove("hidden");
 
             const totalLatency = responseMetrics.reduce((sum, m) => sum + m.latency, 0);
-            const avgLatency = (totalLatency / responseMetrics.length).toFixed(2);
-
-            let cohortName = "Team B-2 (Balanced Scaffold)";
-            if (score >= 7 && avgLatency < 5) cohortName = "Team A-1 (Advanced Peer Mentor)";
-            else if (score <= 4 || avgLatency > 12) cohortName = "Team C-3 (Targeted Support)";
+            const avgLatency = (totalLatency / (responseMetrics.length || 1)).toFixed(2);
 
             const payload = {
                 action: "submit_quiz",
@@ -260,7 +367,6 @@
                 email: studentEmail,
                 score: score,
                 avgLatency: Number(avgLatency),
-                assignedCohort: cohortName,
                 metrics: responseMetrics
             };
 
@@ -331,10 +437,13 @@
 
         function createQuizInstance() {
             const quizName = document.getElementById('new-quiz-name').value.trim();
+            const cefrLevel = document.getElementById('new-quiz-cefr').value;
+            const cohortMode = document.getElementById('new-quiz-mode').value;
+            const cohortParam = Number(document.getElementById('new-quiz-param').value);
             const emailsRaw = document.getElementById('new-quiz-emails').value.trim();
 
             if (!quizName || !emailsRaw) {
-                alert("Please fill in all fields.");
+                alert("Please fill in the quiz name and student emails.");
                 return;
             }
 
@@ -343,7 +452,15 @@
             fetch(SCRIPT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "create_instance", email: currentInstructor.email, quizName: quizName, preauthorizedEmails: emails })
+                body: JSON.stringify({
+                    action: "create_instance",
+                    email: currentInstructor.email,
+                    quizName: quizName,
+                    cefrLevel: cefrLevel,
+                    cohortMode: cohortMode,
+                    cohortParam: cohortParam,
+                    preauthorizedEmails: emails
+                })
             })
             .then(res => res.json())
             .then(res => {
@@ -368,18 +485,31 @@
                         // Render Instances
                         const instancesDiv = document.getElementById('instances-list');
                         instancesDiv.innerHTML = "";
+                        
+                        if (res.instances.length === 0) {
+                            instancesDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No active quiz instances found.</p>`;
+                        }
+
                         res.instances.forEach(inst => {
                             const div = document.createElement('div');
-                            div.className = "bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center";
+                            div.className = "bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center gap-4";
                             div.innerHTML = `
                                 <div>
-                                    <h4 class="font-bold text-white text-sm">${inst.quizName}</h4>
-                                    <span class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">ID: ${inst.quizId}</span>
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="font-bold text-white text-sm">${inst.quizName}</h4>
+                                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">${inst.cefrLevel}</span>
+                                    </div>
+                                    <span class="text-xs font-mono text-indigo-400">ID: ${inst.quizId}</span>
                                     <p class="text-[11px] text-slate-400 mt-1">Authorized Emails: ${inst.authorized}</p>
                                 </div>
-                                <button onclick="releaseCohorts('${inst.quizId}')" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition whitespace-nowrap">
-                                    Release Cohorts & Send Emails
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="releaseCohorts('${inst.quizId}')" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition whitespace-nowrap">
+                                        Release Cohorts & Send Emails
+                                    </button>
+                                    <button onclick="deleteQuizInstance('${inst.quizId}')" class="bg-rose-600/80 hover:bg-rose-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition whitespace-nowrap">
+                                        Delete Quiz
+                                    </button>
+                                </div>
                             `;
                             instancesDiv.appendChild(div);
                         });
@@ -409,12 +539,27 @@
         }
 
         function releaseCohorts(quizId) {
-            if (!confirm(`Are you sure you want to manually release cohort assignments and email notifications for quiz ${quizId}?`)) return;
+            if (!confirm(`Are you sure you want to run the balanced cohort allocation algorithm and send email notifications for quiz ${quizId}?`)) return;
 
             fetch(SCRIPT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: "release_cohorts", quizId: quizId })
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                loadDashboardData();
+            });
+        }
+
+        function deleteQuizInstance(quizId) {
+            if (!confirm(`Are you sure you want to delete quiz ${quizId} and all its associated student submissions? This action cannot be undone.`)) return;
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "delete_instance", quizId: quizId })
             })
             .then(res => res.json())
             .then(res => {
