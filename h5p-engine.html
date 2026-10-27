@@ -122,11 +122,10 @@
                                     <th class="p-3">Score</th>
                                     <th class="p-3">Avg Latency</th>
                                     <th class="p-3">Assigned Cohort</th>
-                                    <th class="p-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="dashboard-tbody">
-                                <tr><td colspan="6" class="p-6 text-center text-slate-500">No submissions recorded yet.</td></tr>
+                                <tr><td colspan="5" class="p-6 text-center text-slate-500">No submissions recorded yet.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -137,7 +136,7 @@
     </div>
 
     <script>
-      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYTEVNiThwt6tMTk2mNSyJ2Ul5CXPEEokE9siWfgOWNamkLZ208mHeHiXOEs2vj_JQKA/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYTEVNiThwt6tMTk2mNSyJ2Ul5CXPEEokE9siWfgOWNamkLZ208mHeHiXOEs2vj_JQKA/exec";
 
         let currentInstructor = null;
         let activeQuizId = null;
@@ -388,7 +387,7 @@
                         // Render Submissions Table
                         const tbody = document.getElementById('dashboard-tbody');
                         if (res.submissions.length === 0) {
-                            tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">No submissions found.</td></tr>`;
+                            tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500">No submissions found.</td></tr>`;
                             return;
                         }
 
@@ -402,7 +401,6 @@
                                 <td class="p-3 text-emerald-400 font-bold">${sub.score}/8</td>
                                 <td class="p-3">${sub.avgLatency}s</td>
                                 <td class="p-3 text-indigo-200">${sub.assignedCohort}</td>
-                                <td class="p-3 text-slate-400 text-[11px]">${new Date(sub.timestamp).toLocaleTimeString()}</td>
                             `;
                             tbody.appendChild(tr);
                         });
