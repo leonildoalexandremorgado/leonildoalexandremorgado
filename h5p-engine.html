@@ -475,71 +475,8 @@
             });
         }
 
-        function loadDashboardData() {
-            if (!currentInstructor) return;
-
-            fetch(`${SCRIPT_URL}?action=get_dashboard&email=${encodeURIComponent(currentInstructor.email)}&passcode=${encodeURIComponent(currentInstructor.password)}`)
-                .then(res => res.json())
-                .then(res => {
-                    if (res.status === "success") {
-                        // Render Instances
-                        const instancesDiv = document.getElementById('instances-list');
-                        instancesDiv.innerHTML = "";
-                        
-                        if (res.instances.length === 0) {
-                            instancesDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No active quiz instances found.</p>`;
-                        }
-
-                        res.instances.forEach(inst => {
-                            const div = document.createElement('div');
-                            div.className = "bg-slate-900/60 p-4 rounded-xl border border-slate-800 flex justify-between items-center gap-4";
-                            div.innerHTML = `
-                                <div>
-                                    <div class="flex items-center gap-2">
-                                        <h4 class="font-bold text-white text-sm">${inst.quizName}</h4>
-                                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded border border-indigo-500/30">${inst.cefrLevel}</span>
-                                    </div>
-                                    <span class="text-xs font-mono text-indigo-400">ID: ${inst.quizId}</span>
-                                    <p class="text-[11px] text-slate-400 mt-1">Authorized Emails: ${inst.authorized}</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="releaseCohorts('${inst.quizId}')" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition whitespace-nowrap">
-                                        Release Cohorts & Send Emails
-                                    </button>
-                                    <button onclick="deleteQuizInstance('${inst.quizId}')" class="bg-rose-600/80 hover:bg-rose-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition whitespace-nowrap">
-                                        Delete Quiz
-                                    </button>
-                                </div>
-                            `;
-                            instancesDiv.appendChild(div);
-                        });
-
-                        // Render Submissions Table
-                        const tbody = document.getElementById('dashboard-tbody');
-                        if (res.submissions.length === 0) {
-                            tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500">No submissions found.</td></tr>`;
-                            return;
-                        }
-
-                        tbody.innerHTML = "";
-                        res.submissions.reverse().forEach(sub => {
-                            const tr = document.createElement('tr');
-                            tr.className = "border-b border-slate-800 hover:bg-slate-800/30 transition";
-                            tr.innerHTML = `
-                                <td class="p-3 font-mono text-indigo-400">${sub.quizId}</td>
-                                <td class="p-3 text-slate-200">${sub.email}</td>
-                                <td class="p-3 text-emerald-400 font-bold">${sub.score}/8</td>
-                                <td class="p-3">${sub.avgLatency}s</td>
-                                <td class="p-3 text-indigo-200">${sub.assignedCohort}</td>
-                            `;
-                            tbody.appendChild(tr);
-                        });
-                    }
-                });
-        }
-
         function releaseCohorts(quizId) {
-            if (!confirm(`Are you sure you want to run the balanced cohort allocation algorithm and send email notifications for quiz ${quizId}?`)) return;
+            if (!confirm(`Are you sure you want to trigger cohort balancing and email notifications for ${quizId}?`)) return;
 
             fetch(SCRIPT_URL, {
                 method: "POST",
@@ -550,11 +487,12 @@
             .then(res => {
                 alert(res.message);
                 loadDashboardData();
-            });
+            })
+            .catch(err => alert("Error releasing cohorts."));
         }
 
-        function deleteQuizInstance(quizId) {
-            if (!confirm(`Are you sure you want to delete quiz ${quizId} and all its associated student submissions? This action cannot be undone.`)) return;
+        function deleteInstance(quizId) {
+            if (!confirm(`Are you sure you want to delete quiz instance ${quizId} and all associated submissions?`)) return;
 
             fetch(SCRIPT_URL, {
                 method: "POST",
@@ -565,7 +503,72 @@
             .then(res => {
                 alert(res.message);
                 loadDashboardData();
-            });
+            })
+            .catch(err => alert("Error deleting instance."));
+        }
+
+        function loadDashboardData() {
+            if (!currentInstructor) return;
+
+            fetch(`${SCRIPT_URL}?action=get_dashboard&email=${encodeURIComponent(currentInstructor.email)}&passcode=${encodeURIComponent(currentInstructor.password)}`)
+                .then(res => res.json())
+                .then(res => {
+                    const tbody = document.getElementById('dashboard-tbody');
+                    const instancesList = document.getElementById('instances-list');
+
+                    if (res.status === "success") {
+                        // Render Active Instances Cards
+                        if (res.instances && res.instances.length > 0) {
+                            let instHtml = "";
+                            res.instances.forEach(inst => {
+                                instHtml += `
+                                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between gap-4">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-mono font-bold text-indigo-400">${inst.quizId}</span>
+                                                <span class="bg-indigo-500/10 text-indigo-300 text-[10px] px-2 py-0.5 rounded border border-indigo-500/20">${inst.cefrLevel}</span>
+                                            </div>
+                                            <h4 class="text-sm font-semibold text-white mt-1">${inst.quizName}</h4>
+                                            <p class="text-xs text-slate-400 mt-0.5">Pre-auth: ${inst.authorized.split(',').length} students</p>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="releaseCohorts('${inst.quizId}')" class="bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg text-xs font-medium transition">Release Cohorts</button>
+                                            <button onclick="deleteInstance('${inst.quizId}')" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-1.5 rounded-lg text-xs font-medium transition">Delete</button>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                            instancesList.innerHTML = instHtml;
+                        } else {
+                            instancesList.innerHTML = `<p class="text-slate-500 text-xs">No active quiz instances created yet.</p>`;
+                        }
+
+                        // Render Submissions Table
+                        if (res.submissions && res.submissions.length > 0) {
+                            let html = "";
+                            res.submissions.forEach(sub => {
+                                html += `
+                                    <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition">
+                                        <td class="p-3 font-mono text-indigo-300">${sub.quizId}</td>
+                                        <td class="p-3">${sub.email}</td>
+                                        <td class="p-3 font-semibold">${sub.score}</td>
+                                        <td class="p-3">${sub.avgLatency}s</td>
+                                        <td class="p-3"><span class="bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20">${sub.assignedCohort || 'Pending Release'}</span></td>
+                                    </tr>
+                                `;
+                            });
+                            tbody.innerHTML = html;
+                        } else {
+                            tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500">No submissions recorded yet.</td></tr>`;
+                        }
+                    } else {
+                        alert(res.message || "Failed to load dashboard data.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Dashboard load error:", err);
+                    document.getElementById('dashboard-tbody').innerHTML = `<tr><td colspan="5" class="p-6 text-center text-rose-400">Failed to load submissions.</td></tr>`;
+                });
         }
     </script>
 </body>
