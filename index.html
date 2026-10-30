@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
-
     <!-- NAVIGATION BAR -->
     <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-800">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -19,24 +18,32 @@
                 <a href="#research" class="hover:text-indigo-400 transition">Research</a>
                 <a href="#artifacts" class="hover:text-indigo-400 transition">Artifacts</a>
                 <a href="#cv" class="hover:text-indigo-400 transition">CV</a>
+                <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
             </div>
         </div>
     </nav>
-
     <!-- TEACHING PHILOSOPHY SECTION -->
     <section id="philosophy" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-10 mb-12">
+            <!-- Professional Profile Photo Placeholder -->
+            <div class="shrink-0">
+                <img src="headshot.jpg" alt="Alex Morgado" class="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-2 border-indigo-500/50 shadow-xl bg-slate-800">
+            </div>
+            <!-- Hero Header Text -->
+            <div class="max-w-2xl">
+                <span class="inline-block py-1 px-3 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
+                    MSEd TESOL Teaching Philosophy
+                </span>
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+                    Empowering Learners Through Task-Based Authenticity and Reflective Practice
+                </h1>
+            </div>
+        </div>
         <div class="max-w-3xl mb-12">
-            <span class="inline-block py-1 px-3 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
-                MSEd TESOL Teaching Philosophy
-            </span>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
-                Empowering Learners Through Task-Based Authenticity and Reflective Practice
-            </h1>
             <p class="text-slate-300 text-lg leading-relaxed">
                 My instructional philosophy is anchored in the principles of Task-Based Language Teaching (TBLT) and Outcome-Based Education (OBE). I believe language and academic skills are acquired most effectively through active, meaningful engagement with communicative challenges that reflect real-world demands.
             </p>
         </div>
-
         <!-- 4 Core Pillars Grid -->
         <div class="grid md:grid-cols-2 gap-6">
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl hover:border-indigo-500/50 transition">
@@ -46,7 +53,6 @@
                     Drawing from Second Language Acquisition (SLA) research, I design instructional sequences moving from pre-task preparation to task execution in collaborative groups, followed by post-task focus on form. Decoupling complex communicative tasks into manageable sub-goals allows learners to build both procedural automaticity and confidence as active agents in their own skill development.
                 </p>
             </div>
-
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl hover:border-indigo-500/50 transition">
                 <div class="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">02. Inclusion & Equity</div>
                 <h3 class="text-xl font-bold text-white mb-3">Inclusive & Diverse Learning Environments</h3>
@@ -54,7 +60,6 @@
                     Having taught over a decade in multicultural educational contexts, I prioritize creating environments that value diverse perspectives, accommodate varied learning styles, and support English as an Additional Language (EAL) learners. Universal Design for Learning (UDL) principles guide my course design through multimodal delivery—incorporating visual assets, digital learning objects, and structured rubrics.
                 </p>
             </div>
-
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl hover:border-indigo-500/50 transition">
                 <div class="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">03. Assessment</div>
                 <h3 class="text-xl font-bold text-white mb-3">Outcome-Based Assessment & Continuous Feedback</h3>
@@ -62,7 +67,6 @@
                     Assessment serves as a transparent roadmap for growth rather than a mere grading exercise. I align all activities and evaluation tools directly with course learning outcomes and Essential Employability Skills (EES). Through multi-tiered analytic rubrics, timely formative feedback, and structured self-reflection, students take ownership of their academic trajectory.
                 </p>
             </div>
-
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl hover:border-indigo-500/50 transition">
                 <div class="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">04. Innovation</div>
                 <h3 class="text-xl font-bold text-white mb-3">Educational Technology & Pedagogical Innovation</h3>
@@ -72,7 +76,6 @@
             </div>
         </div>
     </section>
-
     <!-- FLAGSHIP ARTIFACT SECTION -->
     <section id="flagship" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
         <div class="mb-10">
@@ -82,7 +85,6 @@
                 An interactive H5P module that evaluates learner proficiency in real time, routes students through dynamic diagnostic pathways, and algorithmically outputs balanced cohorts for collaborative group activities.
             </p>
         </div>
-
         <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-2xl mb-12">
             <div class="bg-slate-900/50 px-4 py-3 border-b border-slate-700 flex items-center justify-between">
                 <span class="text-xs font-mono text-slate-400">Live Interactive Demonstration</span>
@@ -94,7 +96,6 @@
                 <iframe src="h5p-engine.html" width="100%" height="700" frameborder="0" allowfullscreen="allowfullscreen" title="Adaptive Reading Diagnostic Engine" class="rounded-xl w-full"></iframe>
             </div>
         </div>
-
         <div class="grid md:grid-cols-3 gap-8">
             <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-xl">
                 <h3 class="font-bold text-indigo-300 mb-2">1. Response-Reactive Branching</h3>
@@ -116,7 +117,6 @@
             </div>
         </div>
     </section>
-
     <!-- RESEARCH STATEMENT SECTION -->
     <section id="research" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
         <div class="max-w-3xl mb-12">
@@ -130,7 +130,6 @@
                 My research investigates how technology-mediated learning environments and structured task frameworks reduce cognitive load, promote grammatical fluency, and foster authentic communicative interaction in post-secondary contexts.
             </p>
         </div>
-
         <div class="grid md:grid-cols-3 gap-6 mb-12">
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl">
                 <h3 class="font-bold text-indigo-300 mb-2">Inductive Consciousness-Raising</h3>
@@ -138,14 +137,12 @@
                     Investigating how Socratic questioning techniques help learners inductively discover grammatical patterns rather than memorizing explicit rules, supporting implicit-to-explicit knowledge transfer.
                 </p>
             </div>
-
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl">
                 <h3 class="font-bold text-indigo-300 mb-2">Performance-Based Fluency</h3>
                 <p class="text-sm text-slate-300 leading-relaxed">
                     Examining the impact of reflective self-monitoring and shadowing routines on L2 speech production, speech segmentation, and procedural automaticity during communicative tasks.
                 </p>
             </div>
-
             <div class="bg-slate-800/40 border border-slate-700/80 p-6 rounded-xl">
                 <h3 class="font-bold text-indigo-300 mb-2">Algorithmic Cohort Grouping</h3>
                 <p class="text-sm text-slate-300 leading-relaxed">
@@ -153,7 +150,6 @@
                 </p>
             </div>
         </div>
-
         <div class="bg-slate-800/30 border border-slate-700/60 p-6 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
                 <h4 class="font-bold text-white text-base">Key Recent Publications & Presentations</h4>
@@ -165,7 +161,6 @@
             </div>
         </div>
     </section>
-
     <!-- INSTRUCTIONAL DESIGN & TBLT ARTIFACTS MATRIX -->
     <section id="artifacts" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
         <div class="max-w-3xl mb-8">
@@ -177,7 +172,6 @@
                 Explore 25 core higher education, EAP bridging, and adult integration course specifications across Japan, Canada, and Europe. Each artifact integrates Task-Based Language Teaching (TBLT) task cycles, outcome-based assessment rubrics, and digital asset frameworks.
             </p>
         </div>
-
         <!-- CATEGORY FILTER BUTTONS -->
         <div class="flex flex-wrap gap-2 mb-8" id="course-filter-bar">
             <button onclick="filterCourses('all')" class="filter-btn active bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition border border-indigo-500">
@@ -193,13 +187,11 @@
                 Testing & Integration (9)
             </button>
         </div>
-
         <!-- 25 COURSE CARDS GRID -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="course-grid">
             <!-- Rendered dynamically by JavaScript script below -->
         </div>
     </section>
-
     <!-- ARTIFACT SPECIFICATION MODAL CONTAINER -->
     <div id="course-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-8 transform transition-all">
@@ -217,28 +209,24 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-
             <!-- Modal Body -->
             <div class="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
                 <div>
                     <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Course Overview & Target Outcomes</h4>
                     <p id="modal-description" class="text-sm text-slate-300 leading-relaxed"></p>
                 </div>
-
                 <div class="bg-slate-800/40 border border-slate-700/70 rounded-xl p-5">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-3 flex items-center gap-2">
                         <span>🎯</span> Course Learning Outcomes (CLOs)
                     </h4>
                     <ul id="modal-clos" class="space-y-2 text-sm text-slate-300"></ul>
                 </div>
-
                 <div class="bg-slate-800/40 border border-slate-700/70 rounded-xl p-5">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-3 flex items-center gap-2">
                         <span>🔄</span> Sample TBLT Task Cycle Architecture
                     </h4>
                     <div id="modal-tblt" class="space-y-3 text-xs text-slate-300"></div>
                 </div>
-
                 <div class="grid sm:grid-cols-2 gap-4">
                     <div class="bg-slate-800/30 border border-slate-700/60 p-4 rounded-xl">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">SLA Assessment Rubric Specs</h4>
@@ -250,7 +238,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Modal Footer -->
             <div class="bg-slate-800/50 px-6 py-4 border-t border-slate-700 flex justify-end">
                 <button onclick="closeCourseModal()" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition">
@@ -259,9 +246,8 @@
             </div>
         </div>
     </div>
-
-    <!-- CV & CONTACT -->
-    <section id="cv" class="max-w-6xl mx-auto px-6 py-20">
+    <!-- CV -->
+    <section id="cv" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
         <h2 class="text-3xl font-bold mb-6">Curriculum Vitae</h2>
         <div class="bg-slate-800/40 border border-slate-700 p-8 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
@@ -273,12 +259,57 @@
             </a>
         </div>
     </section>
-
+    <!-- CONTACT & PROFILES SECTION -->
+    <section id="contact" class="max-w-6xl mx-auto px-6 py-20">
+        <div class="max-w-3xl mb-12">
+            <span class="inline-block py-1 px-3 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
+                Get in Touch
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+                Connect & Collaborate
+            </h2>
+            <p class="text-slate-300 text-base leading-relaxed">
+                I am open to academic teaching appointments, instructional design collaborations, and research inquiries regarding TBLT and EdTech integration.
+            </p>
+            <!-- Social & Academic Badges -->
+            <div class="flex flex-wrap gap-4 mt-6">
+                <a href="https://www.linkedin.com/in/leonildo-alexandre-morgado-791002448/" target="_blank" class="flex items-center gap-2 bg-slate-800 hover:bg-indigo-600 border border-slate-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                    <span>LinkedIn Profile</span>
+                </a>
+                <a href="https://www.researchgate.net/profile/Leonildo-Morgado?ev=hdr_xprf" target="_blank" class="flex items-center gap-2 bg-slate-800 hover:bg-teal-600 border border-slate-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                    <span>ResearchGate</span>
+                </a>
+                <a href="https://orcid.org/0009-0002-7708-5455" target="_blank" class="flex items-center gap-2 bg-slate-800 hover:bg-green-600 border border-slate-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                    <span>ORCID iD</span>
+                </a>
+            </div>
+        </div>
+        <!-- Direct Email Form Container -->
+        <div class="bg-slate-800/40 border border-slate-700/80 p-8 rounded-xl max-w-2xl">
+            <h3 class="text-xl font-bold text-white mb-4">Send a Direct Inquiry</h3>
+            <form action="mailto:morgado.alexandre@gmail.com" method="POST" enctype="text/plain" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Your Name</label>
+                    <input type="text" name="Name" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Your Email</label>
+                    <input type="email" name="Email" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Message</label>
+                    <textarea name="Message" rows="4" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-lg transition-colors">
+                    Send Direct Email
+                </button>
+            </form>
+        </div>
+    </section>
     <!-- FOOTER -->
     <footer class="border-t border-slate-800 text-center py-8 text-xs text-slate-500">
         Hosted on GitHub Pages • Built with HTML5 & Tailwind CSS
     </footer>
-
     <!-- 25 COURSES DATA & MODAL CONTROLLER SCRIPT -->
     <script>
         const coursesData = [
@@ -451,7 +482,6 @@
                 assessment: "Listening comprehension performance battery + note-taking accuracy rubrics.",
                 edtech: "Audio speed-control listening modules with transcript toggle features."
             },
-
             // CATEGORY 2: GENERAL ACADEMIC & TBLT (8 COURSES)
             {
                 id: 9,
@@ -621,7 +651,6 @@
                 assessment: "Multimodal project rubric evaluating content accuracy, digital design, and audio/text clarity.",
                 edtech: "Audacity / Canvas Studio / H5P interactive video creation tools."
             },
-
             // CATEGORY 3: TESTING & INTEGRATION (9 COURSES)
             {
                 id: 17,
@@ -812,17 +841,14 @@
                 edtech: "Praat acoustic analysis software / smartphone audio waveform visualization."
             }
         ];
-
         // RENDER COURSE CARDS GRID
         function renderCourseGrid(filteredData) {
             const grid = document.getElementById("course-grid");
             grid.innerHTML = "";
-
             filteredData.forEach(course => {
                 const card = document.createElement("div");
                 card.className = "bg-slate-800/40 border border-slate-700/80 hover:border-indigo-500/50 p-6 rounded-xl flex flex-col justify-between transition cursor-pointer group";
                 card.onclick = () => openCourseModal(course.id);
-
                 card.innerHTML = `
                     <div>
                         <div class="flex items-center justify-between text-xs mb-3">
@@ -842,16 +868,13 @@
                 grid.appendChild(card);
             });
         }
-
         // FILTER COURSES BY CATEGORY
         function filterCourses(category) {
             const buttons = document.querySelectorAll("#course-filter-bar button");
             buttons.forEach(btn => {
                 btn.className = "filter-btn bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition border border-slate-700";
             });
-
             event.target.className = "filter-btn active bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition border border-indigo-500";
-
             if (category === "all") {
                 renderCourseGrid(coursesData);
             } else {
@@ -859,18 +882,15 @@
                 renderCourseGrid(filtered);
             }
         }
-
         // OPEN SPECIFICATION MODAL
         function openCourseModal(courseId) {
             const course = coursesData.find(c => c.id === courseId);
             if (!course) return;
-
             document.getElementById("modal-category").innerText = course.categoryLabel;
             document.getElementById("modal-region").innerText = course.region;
             document.getElementById("modal-level").innerText = course.level;
             document.getElementById("modal-title").innerText = course.title;
             document.getElementById("modal-description").innerText = course.summary;
-
             // Render CLOs
             const closList = document.getElementById("modal-clos");
             closList.innerHTML = "";
@@ -880,7 +900,6 @@
                 li.innerHTML = `<span class="text-indigo-400 font-bold">•</span> <span>${clo}</span>`;
                 closList.appendChild(li);
             });
-
             // Render TBLT Task Cycle
             const tbltContainer = document.getElementById("modal-tblt");
             tbltContainer.innerHTML = `
@@ -894,30 +913,24 @@
                     <strong class="text-indigo-300">3. Post-Task / Focus on Form:</strong> ${course.tblt.post}
                 </div>
             `;
-
             document.getElementById("modal-assessment").innerText = course.assessment;
             document.getElementById("modal-edtech").innerText = course.edtech;
-
             document.getElementById("course-modal").classList.remove("hidden");
             document.body.style.overflow = "hidden"; // Lock background scroll
         }
-
         // CLOSE MODAL
         function closeCourseModal() {
             document.getElementById("course-modal").classList.add("hidden");
             document.body.style.overflow = "auto";
         }
-
         // CLOSE MODAL ON BACKDROP CLICK OR ESCAPE KEY
         window.addEventListener("click", (e) => {
             const modal = document.getElementById("course-modal");
             if (e.target === modal) closeCourseModal();
         });
-
         window.addEventListener("keydown", (e) => {
             if (e.key === "Escape") closeCourseModal();
         });
-
         // INITIAL RENDER ON PAGE LOAD
         document.addEventListener("DOMContentLoaded", () => {
             renderCourseGrid(coursesData);
