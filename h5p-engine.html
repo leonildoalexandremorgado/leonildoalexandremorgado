@@ -1,51 +1,574 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Response-Reactive Diagnostic & Cohort Grouping Engine</title>
+    <title>Adaptive Reading Diagnostic & Cohort Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans p-6">
-    <div class="max-w-2xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl p-8 shadow-2xl">
-        <div class="flex items-center justify-between mb-6">
-            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">H5P Sandbox Active</span>
-            <span class="text-xs text-slate-400">Diagnostic Module v2.4</span>
-        </div>
-        
-        <h2 class="text-2xl font-bold mb-3">Interactive Proficiency & Cohort Routing</h2>
-        <p class="text-slate-300 text-sm mb-6 leading-relaxed">
-            This module evaluates real-time learner inputs, adapts task complexity via branching logic, and algorithmically sorts learners into collaborative peer cohorts.
-        </p>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased p-6">
 
-        <!-- Interactive Diagnostic Simulator Form -->
-        <div id="diagnostic-app" class="space-y-4">
-            <div id="question-box" class="bg-slate-800/60 border border-slate-700 p-5 rounded-xl">
-                <h3 class="text-sm font-semibold text-indigo-300 mb-2">Step 1: Select Target Reading Strategy</h3>
-                <p class="text-xs text-slate-300 mb-4">When encountering an unknown academic lexical cluster in an 800-word text, what is the optimal initial processing step?</p>
-                
-                <div class="space-y-2">
-                    <button onclick="selectOption('correct')" class="w-full text-left bg-slate-900 hover:bg-indigo-600/30 border border-slate-700 p-3 rounded-lg text-xs transition">A) Utilize context clues and syntactic cues to infer meaning before consulting secondary glosses.</button>
-                    <button onclick="selectOption('incorrect')" class="w-full text-left bg-slate-900 hover:bg-indigo-600/30 border border-slate-700 p-3 rounded-lg text-xs transition">B) Immediately stop reading to translate every individual word via L1 dictionary lookup.</button>
+    <div class="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-xl">
+        
+        <!-- TOP VIEW TABS -->
+        <div class="flex justify-end gap-2 mb-6 text-xs">
+            <button onclick="switchView('student')" id="btn-student" class="bg-indigo-600 text-white font-medium px-3 py-1.5 rounded-lg transition">Student Portal</button>
+            <button onclick="switchView('instructor')" id="btn-instructor" class="bg-slate-800 text-slate-400 hover:text-white font-medium px-3 py-1.5 rounded-lg transition border border-slate-700">Instructor Portal</button>
+        </div>
+
+        <!-- ================= STUDENT VIEW ================= -->
+        <div id="student-view">
+            <div id="header-area" class="mb-8">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                    Diagnostic Placement & Cohort Grouping
+                </span>
+                <h1 class="text-2xl font-bold mt-3">Reading & Comprehension Diagnostic</h1>
+                <p class="text-slate-400 text-sm mt-1">Enter your Quiz Identifier and pre-authorized email to begin your diagnostic assessment.</p>
+            </div>
+
+            <!-- STUDENT LOGIN/REGISTRATION -->
+            <div id="student-auth-container" class="space-y-4 bg-slate-800/40 p-6 rounded-xl border border-slate-800">
+                <h2 class="text-lg font-bold text-indigo-300">Student Authorization</h2>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Quiz Identifier (provided by your instructor)</label>
+                    <input type="text" id="student-quiz-id" placeholder="e.g. QUIZ-A8F2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-indigo-500 outline-none uppercase font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Pre-authorized Email</label>
+                    <input type="email" id="student-email" placeholder="e.g., student@university.edu" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-indigo-500 outline-none">
+                </div>
+                <button onclick="validateStudent()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg text-sm transition mt-2">
+                    Verify & Start Diagnostic &rarr;
+                </button>
+            </div>
+
+            <!-- ASSESSMENT CONTAINER -->
+            <div id="quiz-container" class="hidden"></div>
+
+            <!-- RESULTS CONTAINER -->
+            <div id="results-container" class="hidden">
+                <div class="text-center py-6">
+                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 mb-4 border border-emerald-500/20">
+                        ✓
+                    </div>
+                    <h2 class="text-2xl font-bold text-white">Diagnostic Submitted Successfully</h2>
+                    <p class="text-slate-300 text-sm mt-2 max-w-md mx-auto">
+                        Your profile and latency metrics have been recorded. Your cohort results will be balanced and emailed to you automatically once cohorts are released.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= INSTRUCTOR VIEW ================= -->
+        <div id="instructor-view" class="hidden">
+            <div class="mb-6">
+                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+                    Instructor Portal
+                </span>
+                <h1 class="text-2xl font-bold mt-3">Multi-Instructor Dashboard</h1>
+                <p class="text-slate-400 text-sm mt-1">Register or log in with your email and password to manage isolated quiz instances and view your student cohorts.</p>
+            </div>
+
+            <!-- INSTRUCTOR AUTH CARD -->
+            <div id="inst-auth-card" class="bg-slate-800/40 p-6 rounded-xl border border-slate-800 space-y-4 mb-6">
+                <h2 id="inst-auth-title" class="text-lg font-bold text-indigo-300">Instructor Login</h2>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Instructor Email</label>
+                        <input type="email" id="inst-email" placeholder="instructor@university.edu" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Password</label>
+                        <input type="password" id="inst-pass" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="instructorLogin()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition">Login</button>
+                    <button onclick="instructorRegister()" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition">Register New Account</button>
                 </div>
             </div>
 
-            <div id="result-box" class="hidden bg-emerald-500/10 border border-emerald-500/30 p-5 rounded-xl text-center">
-                <h3 class="text-emerald-400 font-bold text-sm mb-1">Diagnostic Evaluated Successfully</h3>
-                <p class="text-xs text-slate-300">Learner routed to <strong class="text-white">Homogeneous Scaffolding Cohort B</strong> based on response-reactive branching metrics.</p>
-                <button onclick="resetEngine()" class="mt-4 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">Restart Diagnostic</button>
+            <!-- INSTRUCTOR DASHBOARD CONTENT -->
+            <div id="inst-dashboard-content" class="hidden space-y-8">
+                <!-- CREATE INSTANCE CARD -->
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-300">Create New Quiz Instance</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Quiz Name / Course Title</label>
+                            <input type="text" id="new-quiz-name" placeholder="e.g. EAP 301 Midterm Diagnostic" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">CEFR Proficiency Level</label>
+                            <select id="new-quiz-cefr" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                                <option value="Pre-A0">Pre-A0 (Absolute Beginner / Alphabet & Greetings)</option>
+                                <option value="A0">A0 (Breakthrough / Basic Survival)</option>
+                                <option value="A1" selected>A1 (Waystage / Elementary)</option>
+                                <option value="A2">A2 (Waypoint / Pre-Intermediate)</option>
+                                <option value="B1">B1 (Threshold / Intermediate)</option>
+                                <option value="B2">B2 (Vantage / Upper-Intermediate)</option>
+                                <option value="C1">C1 (Effective Operational Proficiency)</option>
+                                <option value="C2">C2 (Mastery / Proficient)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Cohort Sizing Mode</label>
+                            <select id="new-quiz-mode" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                                <option value="max_size">Max Students Per Team</option>
+                                <option value="target_count">Target Number of Teams</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Cohort Sizing Parameter Value</label>
+                            <input type="number" id="new-quiz-param" value="4" min="1" max="50" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Pre-authorized Student Emails (Comma-separated)</label>
+                        <textarea id="new-quiz-emails" placeholder="student1@uni.edu, student2@uni.edu, student3@uni.edu" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-indigo-500"></textarea>
+                    </div>
+                    <button onclick="createQuizInstance()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition">Generate Unique Quiz Instance &rarr;</button>
+                </div>
+
+                <!-- INSTANCES & SUBMISSIONS LIST -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-indigo-300">Your Active Quiz Instances & Submissions</h3>
+                        <button onclick="loadDashboardData()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg text-xs transition border border-slate-700">Refresh Data</button>
+                    </div>
+
+                    <div id="instances-list" class="space-y-3"></div>
+
+                    <div class="overflow-x-auto border border-slate-800 rounded-xl bg-slate-900/50 mt-4">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="bg-slate-800 text-slate-400 uppercase font-semibold">
+                                <tr>
+                                    <th class="p-3">Quiz ID</th>
+                                    <th class="p-3">Student Email</th>
+                                    <th class="p-3">Score</th>
+                                    <th class="p-3">Avg Latency</th>
+                                    <th class="p-3">Assigned Cohort</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboard-tbody">
+                                <tr><td colspan="5" class="p-6 text-center text-slate-500">No submissions recorded yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        function selectOption(type) {
-            document.getElementById('question-box').classList.add('hidden');
-            document.getElementById('result-box').classList.remove('hidden');
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSDm5eVpvJLq5y14y4aBpvhFzZFEAnRh-loehji1ldkxPhz_gIPVHdDxGdMaj_mBSA5g/exec";
+
+        let currentInstructor = null;
+        let activeQuizId = null;
+        let studentEmail = null;
+        let activeCefrLevel = "A1";
+
+        // --- CEFR-TIERED QUESTION BANKS ---
+        const cefrQuestions = {
+            "Pre-A0": [
+                { prompt: "Identify the letter that comes after 'A':", options: ["B", "C", "Z"], correct: 0 },
+                { prompt: "Choose the correct greeting for the morning:", options: ["Good night", "Good morning", "Goodbye"], correct: 1 },
+                { prompt: "What color is a standard ripe banana?", options: ["Blue", "Yellow", "Red"], correct: 1 },
+                { prompt: "How many fingers are on one human hand?", options: ["3", "5", "10"], correct: 1 },
+                { prompt: "Select the number 'three':", options: ["1", "3", "8"], correct: 1 },
+                { prompt: "Which is a domestic animal?", options: ["Lion", "Cat", "Shark"], correct: 1 },
+                { prompt: "Choose the word for a vehicle with four wheels:", options: ["Car", "Boat", "Plane"], correct: 0 },
+                { prompt: "What do you use to write on paper?", options: ["Pencil", "Fork", "Spoon"], correct: 0 }
+            ],
+            "A0": [
+                { prompt: "Complete the sentence: 'My name ___ John.'", options: ["is", "are", "am"], correct: 0 },
+                { prompt: "Which word means 'thank you' in Japanese context?", options: ["Hello", "Arigato", "Goodbye"], correct: 1 },
+                { prompt: "Choose the correct pronoun: '___ is a teacher.' (female)", options: ["He", "She", "It"], correct: 1 },
+                { prompt: "Where do you buy food?", options: ["Library", "Supermarket", "Hospital"], correct: 1 },
+                { prompt: "What time is 12:00 PM?", options: ["Midnight", "Noon", "Morning"], correct: 1 },
+                { prompt: "Choose the plural of 'apple':", options: ["apples", "applez", "applies"], correct: 0 },
+                { prompt: "Complete: 'Where ___ you from?'", options: ["is", "are", "am"], correct: 1 },
+                { prompt: "Which day comes after Monday?", options: ["Sunday", "Tuesday", "Friday"], correct: 1 }
+            ],
+            "A1": [
+                { prompt: "Read the notice: 'Library hours are extended until 8:00 PM during exam week.' What does this mean?", options: ["The library closes earlier than usual.", "Students can stay and study later.", "The library is closed all week."], correct: 1 },
+                { prompt: "Read the email: 'Please submit your draft by Friday morning.' When is the deadline?", options: ["Friday morning", "Monday afternoon", "Thursday evening"], correct: 0 },
+                { prompt: "Read: 'Ensure all equipment is powered off before exiting.' What should you do?", options: ["Turn off equipment.", "Leave lights on.", "Lock the door."], correct: 0 },
+                { prompt: "Choose the correct past tense of 'go':", options: ["goed", "went", "gone"], correct: 1 },
+                { prompt: "Complete: 'She doesn't ___ coffee in the morning.'", options: ["drink", "drinks", "drank"], correct: 0 },
+                { prompt: "Which word is an adjective?", options: ["Quickly", "Beautiful", "Run"], correct: 1 },
+                { prompt: "Choose the correct preposition: 'The book is ___ the table.'", options: ["on", "in", "at"], correct: 0 },
+                { prompt: "What is the opposite of 'expensive'?", options: ["Cheap", "Large", "Old"], correct: 0 }
+            ],
+            "A2": [
+                { prompt: "Read the memo: 'Due to scheduled maintenance, the elevator will be out of service until noon.' What is affected?", options: ["The stairs", "The elevator", "The parking lot"], correct: 1 },
+                { prompt: "Choose the correct comparative form: 'This car is ___ than that one.'", options: ["fast", "faster", "fastest"], correct: 1 },
+                { prompt: "Complete: 'If it rains tomorrow, we ___ stay indoors.'", options: ["will", "would", "did"], correct: 0 },
+                { prompt: "What does 'postpone' mean?", options: ["To cancel permanently", "To delay to a later time", "To finish early"], correct: 1 },
+                { prompt: "Choose the correct modal for obligation: 'You ___ wear a helmet when cycling.'", options: ["should", "might", "can"], correct: 0 },
+                { prompt: "Identify the conjunction in: 'I wanted to go, but it was raining.'", options: ["wanted", "but", "raining"], correct: 1 },
+                { prompt: "Complete: 'Have you ever ___ to Canada?'", options: ["be", "been", "go"], correct: 1 },
+                { prompt: "What is a synonym for 'assist'?", options: ["Help", "Hinder", "Ignore"], correct: 0 }
+            ],
+            "B1": [
+                { prompt: "Read the excerpt: 'Despite initial delays, the team successfully synthesized qualitative findings.' What was the outcome?", options: ["Failure", "Success", "Postponement"], correct: 1 },
+                { prompt: "Complete: 'By the time we arrived, the movie ___.'", options: ["started", "had started", "has started"], correct: 1 },
+                { prompt: "What does 'ambiguous' mean?", options: ["Clear and precise", "Open to multiple interpretations", "Completely false"], correct: 1 },
+                { prompt: "Choose the correct passive voice: 'The report ___ by the manager yesterday.'", options: ["was written", "wrote", "is writing"], correct: 0 },
+                { prompt: "Complete: 'I wish I ___ more time to finish the project.'", options: ["have", "had", "will have"], correct: 1 },
+                { prompt: "What is the meaning of 'feasible'?", options: ["Impossible", "Practical and achievable", "Expensive"], correct: 1 },
+                { prompt: "Choose the correct relative pronoun: 'The student ___ won the award is in my class.'", options: ["which", "who", "whose"], correct: 1 },
+                { prompt: "What does 'mitigate' imply?", options: ["To make worse", "To lessen severity", "To ignore completely"], correct: 1 }
+            ],
+            "B2": [
+                { prompt: "Read the passage: 'Although the policy aims to reduce paper usage, many department chairs continue printing weekly reports.' What is implied?", options: ["Paper waste is eliminated.", "Faculty compliance is incomplete.", "Printers are broken."], correct: 1 },
+                { prompt: "Choose the correct idiom for starting something new: 'Let's ___ from scratch.'", options: ["start", "begin", "initiate"], correct: 0 },
+                { prompt: "Complete: 'Scarcely had she entered the room ___ the phone rang.'", options: ["when", "than", "then"], correct: 0 },
+                { prompt: "What does 'ubiquitous' mean?", options: ["Rare and hidden", "Found everywhere", "Extremely dangerous"], correct: 1 },
+                { prompt: "Choose the correct subjunctive form: 'It is crucial that he ___ present at the meeting.'", options: ["is", "be", "was"], correct: 1 },
+                { prompt: "What is a synonym for 'comprehensive'?", options: ["Superficial", "Thorough and inclusive", "Brief"], correct: 1 },
+                { prompt: "Complete: 'Hardly ___ know what to say when I heard the news.'", options: ["I did", "did I", "I could"], correct: 1 },
+                { prompt: "What does 'pragmatic' signify?", options: ["Dealing with things sensibly and realistically", "Acting purely on emotion", "Theoretical and abstract"], correct: 0 }
+            ],
+            "C1": [
+                { prompt: "Read the abstract: 'The methodology utilized a dual-coding paradigm to isolate extraneous cognitive load.' What does 'isolate' mean here?", options: ["To separate and study independently", "To completely ignore", "To combine variables"], correct: 0 },
+                { prompt: "Evaluate: 'While prior models emphasize rote retention, contemporary SLA paradigms privilege negotiated interaction.' What is asserted?", options: ["Memorization is superior.", "Modern theories value interactive dialogue.", "Both models are identical."], correct: 1 },
+                { prompt: "What does 'mitigating circumstance' denote?", options: ["A factor that excuses or lessens blameworthiness", "An aggravating factor", "A complete roadblock"], correct: 0 },
+                { prompt: "Choose the correct inversion: 'Not only ___ the deadline, but he also exceeded expectations.'", options: ["he met", "did he meet", "met he"], correct: 1 },
+                { prompt: "What does 'esoteric' mean?", options: ["Understood by only a small specialized audience", "Common knowledge", "Outdated"], correct: 0 },
+                { prompt: "Complete: 'Such was the intensity of the debate ___ consensus was reached.'", options: ["that no", "than no", "as no"], correct: 0 },
+                { prompt: "What is the connotation of 'ephemeral'?", options: ["Lasting for a very short time", "Eternal", "Solid and robust"], correct: 0 },
+                { prompt: "What does 'concomitant' mean?", options: ["Naturallly accompanying or corresponding", "Opposing", "Sequential"], correct: 0 }
+            ],
+            "C2": [
+                { prompt: "Read the conclusion: 'The empirical evidence remains equivocal, necessitating further longitudinal research.' What is the state of the evidence?", options: ["Completely proven.", "Unclear or open to interpretation.", "Disproven."], correct: 1 },
+                { prompt: "What does 'perspicacious' signify?", options: ["Having a ready insight into things; astute", "Dull and unobservant", "Overly emotional"], correct: 0 },
+                { prompt: "Choose the correct collocation: 'His speech was replete ___ academic jargon.'", options: ["with", "of", "in"], correct: 0 },
+                { prompt: "What does 'pusillanimous' mean?", options: ["Showing a lack of courage or determination; timid", "Brave and bold", "Generous"], correct: 0 },
+                { prompt: "Complete: 'No sooner had the manuscript been published ___ it received critical acclaim.'", options: ["than", "when", "then"], correct: 0 },
+                { prompt: "What is the meaning of 'mendacious'?", options: ["Truthful", "Not telling the truth; lying", "Healing"], correct: 1 },
+                { prompt: "What does 'trenchant' analysis imply?", options: ["Vigorous or incisive in expression or style", "Weak and meandering", "Superficial"], correct: 0 },
+                { prompt: "What does 'obstreperous' describe?", options: ["Noisy and difficult to control", "Quiet and compliant", "Transparent"], correct: 0 }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let startTime = 0;
+        let responseMetrics = [];
+        let score = 0;
+
+        function switchView(view) {
+            if (view === 'student') {
+                document.getElementById('student-view').classList.remove('hidden');
+                document.getElementById('instructor-view').classList.add('hidden');
+                document.getElementById('btn-student').className = "bg-indigo-600 text-white font-medium px-3 py-1.5 rounded-lg transition";
+                document.getElementById('btn-instructor').className = "bg-slate-800 text-slate-400 hover:text-white font-medium px-3 py-1.5 rounded-lg transition border border-slate-700";
+            } else {
+                document.getElementById('student-view').classList.add('hidden');
+                document.getElementById('instructor-view').classList.remove('hidden');
+                document.getElementById('btn-instructor').className = "bg-indigo-600 text-white font-medium px-3 py-1.5 rounded-lg transition";
+                document.getElementById('btn-student').className = "bg-slate-800 text-slate-400 hover:text-white font-medium px-3 py-1.5 rounded-lg transition border border-slate-700";
+            }
         }
-        function resetEngine() {
-            document.getElementById('result-box').classList.add('hidden');
-            document.getElementById('question-box').classList.remove('hidden');
+
+        // --- STUDENT FUNCTIONS ---
+
+        function validateStudent() {
+            const quizId = document.getElementById('student-quiz-id').value.trim().toUpperCase();
+            const email = document.getElementById('student-email').value.trim();
+
+            if (!quizId || !email) {
+                alert("Please enter both your Quiz Identifier and Email.");
+                return;
+            }
+
+            fetch(`${SCRIPT_URL}?action=validate_student&quizId=${encodeURIComponent(quizId)}&email=${encodeURIComponent(email)}`)
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status === "success") {
+                        activeQuizId = quizId;
+                        studentEmail = email;
+                        activeCefrLevel = res.cefrLevel || "A1";
+                        document.getElementById('student-auth-container').classList.add('hidden');
+                        document.getElementById('quiz-container').classList.remove('hidden');
+                        currentQuestion = 0;
+                        score = 0;
+                        responseMetrics = [];
+                        renderQuestion();
+                    } else {
+                        alert(res.message);
+                    }
+                })
+                .catch(err => alert("Error validating student authorization."));
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById("quiz-container");
+            const qList = cefrQuestions[activeCefrLevel] || cefrQuestions["A1"];
+            
+            if (currentQuestion >= qList.length) {
+                finishStudentQuiz();
+                return;
+            }
+
+            startTime = Date.now();
+            const q = qList[currentQuestion];
+            let html = `
+                <div class="mb-4 flex items-center justify-between text-xs text-slate-400">
+                    <span class="bg-slate-800 px-2.5 py-1 rounded-md text-indigo-300 font-medium">Diagnostic Level: ${activeCefrLevel}</span>
+                    <span>Step ${currentQuestion + 1} of ${qList.length}</span>
+                </div>
+                <h3 class="text-lg font-semibold text-white mb-4">${q.prompt}</h3>
+                <div class="space-y-3">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                html += `
+                    <button onclick="handleAnswer(${idx})" class="w-full text-left bg-slate-800/40 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/50 p-4 rounded-xl text-sm transition text-slate-200">
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function handleAnswer(selectedIdx) {
+            const endTime = Date.now();
+            const latencySeconds = (endTime - startTime) / 1000;
+            const qList = cefrQuestions[activeCefrLevel] || cefrQuestions["A1"];
+            const q = qList[currentQuestion];
+            const isCorrect = (selectedIdx === q.correct);
+
+            if (isCorrect) score++;
+
+            responseMetrics.push({ questionIndex: currentQuestion, correct: isCorrect, latency: latencySeconds });
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        function finishStudentQuiz() {
+            document.getElementById("header-area").classList.add("hidden");
+            document.getElementById("quiz-container").classList.add("hidden");
+            document.getElementById("results-container").classList.remove("hidden");
+
+            const totalLatency = responseMetrics.reduce((sum, m) => sum + m.latency, 0);
+            const avgLatency = (totalLatency / (responseMetrics.length || 1)).toFixed(2);
+
+            const payload = {
+                action: "submit_quiz",
+                quizId: activeQuizId,
+                email: studentEmail,
+                score: score,
+                avgLatency: Number(avgLatency),
+                metrics: responseMetrics
+            };
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Submission error:", err));
+        }
+
+        // --- INSTRUCTOR FUNCTIONS ---
+
+        function instructorRegister() {
+            const email = document.getElementById('inst-email').value.trim();
+            const password = document.getElementById('inst-pass').value;
+
+            if (!email || !password) {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "register_instructor", email: email, password: password })
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                if (res.status === "success") instructorLogin();
+            })
+            .catch(err => {
+                alert("Connection error during registration. Check your Web App URL.");
+                console.error(err);
+            });
+        }
+
+        function instructorLogin() {
+            const email = document.getElementById('inst-email').value.trim();
+            const password = document.getElementById('inst-pass').value;
+
+            if (!email || !password) {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "login_instructor", email: email, password: password })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === "success") {
+                    currentInstructor = { email: res.email, password: password };
+                    document.getElementById('inst-auth-card').classList.add('hidden');
+                    document.getElementById('inst-dashboard-content').classList.remove('hidden');
+                    loadDashboardData();
+                } else {
+                    alert(res.message || "Login failed.");
+                }
+            })
+            .catch(err => {
+                alert("Connection error during login. Check your Web App URL.");
+                console.error(err);
+            });
+        }
+
+        function createQuizInstance() {
+            const quizName = document.getElementById('new-quiz-name').value.trim();
+            const cefrLevel = document.getElementById('new-quiz-cefr').value;
+            const cohortMode = document.getElementById('new-quiz-mode').value;
+            const cohortParam = Number(document.getElementById('new-quiz-param').value);
+            const emailsRaw = document.getElementById('new-quiz-emails').value.trim();
+
+            if (!quizName || !emailsRaw) {
+                alert("Please fill in the quiz name and student emails.");
+                return;
+            }
+
+            const emails = emailsRaw.split(",").map(e => e.trim()).filter(e => e);
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({
+                    action: "create_instance",
+                    email: currentInstructor.email,
+                    quizName: quizName,
+                    cefrLevel: cefrLevel,
+                    cohortMode: cohortMode,
+                    cohortParam: cohortParam,
+                    preauthorizedEmails: emails
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === "success") {
+                    alert(`Quiz Instance Created Successfully!\nUnique Quiz Identifier: ${res.quizId}`);
+                    document.getElementById('new-quiz-name').value = "";
+                    document.getElementById('new-quiz-emails').value = "";
+                    loadDashboardData();
+                } else {
+                    alert(res.message);
+                }
+            });
+        }
+
+        function releaseCohorts(quizId) {
+            if (!confirm(`Are you sure you want to trigger cohort balancing and email notifications for ${quizId}?`)) return;
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "release_cohorts", quizId: quizId })
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                loadDashboardData();
+            })
+            .catch(err => alert("Error releasing cohorts."));
+        }
+
+        function deleteInstance(quizId) {
+            if (!confirm(`Are you sure you want to delete quiz instance ${quizId} and all associated submissions?`)) return;
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "delete_instance", quizId: quizId })
+            })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                loadDashboardData();
+            })
+            .catch(err => alert("Error deleting instance."));
+        }
+
+        function loadDashboardData() {
+            if (!currentInstructor) return;
+
+            fetch(`${SCRIPT_URL}?action=get_dashboard&email=${encodeURIComponent(currentInstructor.email)}&passcode=${encodeURIComponent(currentInstructor.password)}`)
+                .then(res => res.json())
+                .then(res => {
+                    const tbody = document.getElementById('dashboard-tbody');
+                    const instancesList = document.getElementById('instances-list');
+
+                    if (res.status === "success") {
+                        // Render Active Instances Cards
+                        if (res.instances && res.instances.length > 0) {
+                            let instHtml = "";
+                            res.instances.forEach(inst => {
+                                instHtml += `
+                                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between gap-4">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-mono font-bold text-indigo-400">${inst.quizId}</span>
+                                                <span class="bg-indigo-500/10 text-indigo-300 text-[10px] px-2 py-0.5 rounded border border-indigo-500/20">${inst.cefrLevel}</span>
+                                            </div>
+                                            <h4 class="text-sm font-semibold text-white mt-1">${inst.quizName}</h4>
+                                            <p class="text-xs text-slate-400 mt-0.5">Pre-auth: ${inst.authorized.split(',').length} students</p>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="releaseCohorts('${inst.quizId}')" class="bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg text-xs font-medium transition">Release Cohorts</button>
+                                            <button onclick="deleteInstance('${inst.quizId}')" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 px-3 py-1.5 rounded-lg text-xs font-medium transition">Delete</button>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                            instancesList.innerHTML = instHtml;
+                        } else {
+                            instancesList.innerHTML = `<p class="text-slate-500 text-xs">No active quiz instances created yet.</p>`;
+                        }
+
+                        // Render Submissions Table
+                        if (res.submissions && res.submissions.length > 0) {
+                            let html = "";
+                            res.submissions.forEach(sub => {
+                                html += `
+                                    <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition">
+                                        <td class="p-3 font-mono text-indigo-300">${sub.quizId}</td>
+                                        <td class="p-3">${sub.email}</td>
+                                        <td class="p-3 font-semibold">${sub.score}</td>
+                                        <td class="p-3">${sub.avgLatency}s</td>
+                                        <td class="p-3"><span class="bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20">${sub.assignedCohort || 'Pending Release'}</span></td>
+                                    </tr>
+                                `;
+                            });
+                            tbody.innerHTML = html;
+                        } else {
+                            tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500">No submissions recorded yet.</td></tr>`;
+                        }
+                    } else {
+                        alert(res.message || "Failed to load dashboard data.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Dashboard load error:", err);
+                    document.getElementById('dashboard-tbody').innerHTML = `<tr><td colspan="5" class="p-6 text-center text-rose-400">Failed to load submissions.</td></tr>`;
+                });
         }
     </script>
 </body>
