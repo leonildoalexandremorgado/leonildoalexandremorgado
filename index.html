@@ -169,13 +169,13 @@ Instructional Design & Curriculum Matrix
 </span>
 <h2 class="text-3xl font-bold mb-4">Post-Secondary & Integration Curriculum Artifacts</h2>
 <p class="text-slate-300 text-base leading-relaxed">
-Explore 27 core higher education, EAP bridging, and professional integration course specifications across Japan, Canada, and Europe. Each artifact integrates Task-Based Language Teaching (TBLT) task cycles, outcome-based assessment rubrics, and digital asset frameworks.
+Explore 32 core higher education, EAP bridging, and professional integration course specifications across Japan, Canada, and Europe. Each artifact integrates Task-Based Language Teaching (TBLT) task cycles, outcome-based assessment rubrics, and digital asset frameworks.
 </p>
 </div>
 <!-- CATEGORY FILTER BUTTONS -->
 <div class="flex flex-wrap gap-2 mb-8" id="course-filter-bar">
 <button onclick="filterCourses('all')" class="filter-btn active bg-indigo-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition border border-indigo-500">
-All Courses (27)
+All Courses (32)
 </button>
 <button onclick="filterCourses('eap')" class="filter-btn bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition border border-slate-700">
 EAP & University Bridging (8)
@@ -189,8 +189,11 @@ Testing & Integration (9)
 <button onclick="filterCourses('inbound')" class="filter-btn bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition border border-slate-700">
 Inbound Hospitality & Professional Skills (2)
 </button>
+<button onclick="filterCourses('specialized')" class="filter-btn bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition border border-slate-700">
+Specialized EAP & Professional English (5)
+</button>
 </div>
-<!-- 27 COURSE CARDS GRID -->
+<!-- 32 COURSE CARDS GRID -->
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="course-grid">
 <!-- Rendered dynamically by JavaScript script below -->
 </div>
@@ -313,7 +316,7 @@ Send Direct Email
 <footer class="border-t border-slate-800 text-center py-8 text-xs text-slate-500">
 Hosted on GitHub Pages • Built with HTML5 & Tailwind CSS
 </footer>
-<!-- 27 COURSES DATA & MODAL CONTROLLER SCRIPT -->
+<!-- 32 COURSES DATA & MODAL CONTROLLER SCRIPT -->
 <script>
 const coursesData = [
     // CATEGORY 1: EAP & UNIVERSITY BRIDGING (8 COURSES)
@@ -885,6 +888,113 @@ const coursesData = [
         },
         assessment: "Fluency development matrix tracking word-count-per-minute gains and pause reduction across repeated task cycles.",
         edtech: "Mobile audio recording logs for self-paced progress tracking and fluency check-ins."
+    },
+    // CATEGORY 5: SPECIALIZED EAP & PROFESSIONAL ENGLISH (5 COURSES)
+    {
+        id: 28,
+        category: "specialized",
+        categoryLabel: "Specialized EAP & Professional English",
+        title: "Foundational Academic Reading & Listening I",
+        region: "Global Post-Secondary",
+        level: "CEFR B1 / Year 1 Undergraduate",
+        summary: "Compulsory foundational reading and listening course focusing on non-fiction academic texts, vocabulary acquisition, and listening accuracy. Blends remote modular learning with interactive active learning sessions.",
+        clos: [
+            "Master essential academic vocabulary and phonetic pronunciation.",
+            "Interpret fundamental grammatical structures accurately.",
+            "Produce paragraph-level summaries.",
+            "Build listening and speaking competence for academic discourse."
+        ],
+        tblt: {
+            pre: "Pre-task vocabulary and grammar preview via digital modules.",
+            task: "Task execution through active group discussions and paragraph summary generation.",
+            post: "Post-task review and standardized proficiency test preparation strategies."
+        },
+        assessment: "Term Examinations (40%), Academic Vocabulary Tests (20%), and standardized proficiency requirements (40%).",
+        edtech: "Blended learning management system delivery, digital vocabulary modules, and interactive media platform integration."
+    },
+    {
+        id: 29,
+        category: "specialized",
+        categoryLabel: "Specialized EAP & Professional English",
+        title: "Intermediate Academic Reading & Synthesis II",
+        region: "Global Post-Secondary",
+        level: "CEFR B2 / Year 1 Undergraduate",
+        summary: "Intermediate academic reading and listening course bridging general English to advanced scientific and technical discourse through intensive close reading and lexical expansion.",
+        clos: [
+            "Comprehend complex thematic and scientific non-fiction texts.",
+            "Execute close reading and paragraph summarization.",
+            "Master advanced academic lexicons and morphological word-building."
+        ],
+        tblt: {
+            pre: "Pre-task independent lexical research.",
+            task: "Task execution via inductive text deconstruction and collaborative peer discussions.",
+            post: "Post-task video analysis and formative vocabulary testing."
+        },
+        assessment: "Term Examinations (40%), Vocabulary Assessments (20%), and standardized proficiency score requirements (40%).",
+        edtech: "Remote learning modules, interactive digital platforms, and digital assessment tracking."
+    },
+    {
+        id: 30,
+        category: "specialized",
+        categoryLabel: "Specialized EAP & Professional English",
+        title: "Advanced Academic Literature & Research Literacy III",
+        region: "Global Post-Secondary",
+        level: "CEFR C1 / Year 1 Undergraduate",
+        summary: "Rigorous upper-tier compulsory course preparing future student-researchers for high-level academic paper, journal comprehension, and advanced scientific discourse.",
+        clos: [
+            "Analyze advanced non-fiction and research articles.",
+            "Execute precise paragraph-by-paragraph summarization.",
+            "Develop precise phonetic control over English suprasegmentals, stress, and intonation."
+        ],
+        tblt: {
+            pre: "Pre-task independent unit preparation.",
+            task: "Task execution through intensive close reading, Socratic dialogue, and group debate.",
+            post: "Post-task standardized test simulations and vocabulary testing."
+        },
+        assessment: "Term Examinations (40%), Vocabulary Assessments (20%), and standardized proficiency requirements (40%).",
+        edtech: "Blended learning architectures, digital audio labs, and institutional testing platforms."
+    },
+    {
+        id: 31,
+        category: "specialized",
+        categoryLabel: "Specialized EAP & Professional English",
+        title: "Professional Communication for Healthcare Contexts",
+        region: "Global Post-Secondary",
+        level: "CEFR B1-B2 / Professional Health Track",
+        summary: "Practical clinical and professional communication course training students in oral interaction, bedside manner, client interviewing, and specialized terminology management.",
+        clos: [
+            "Conduct basic client/patient interviews.",
+            "Master specialized terminology concerning body systems, symptoms, diagnostics, and procedural instructions.",
+            "Distinguish general vs. technical terminology."
+        ],
+        tblt: {
+            pre: "Pre-task vocabulary look-up and professional scenario pre-reading.",
+            task: "Task execution via simulated provider-client role-plays in pairs/groups (taking histories, vital signs, assessing pain).",
+            post: "Post-task formative quizzes."
+        },
+        assessment: "Comprehensive Final Examination (100%), supported by formative professional knowledge quizzes.",
+        edtech: "Interactive professional role-play scenarios, learning management announcements, and digital quiz tools."
+    },
+    {
+        id: 32,
+        category: "specialized",
+        categoryLabel: "Specialized EAP & Professional English",
+        title: "Academic Paragraph Writing & Process Composition",
+        region: "Global Post-Secondary",
+        level: "CEFR B2 / Year 1 Undergraduate",
+        summary: "Process-writing workshop equipping future academic researchers with foundational composition skills to structure clear paragraphs, essays, and opinion papers.",
+        clos: [
+            "Construct academic paragraphs following correct formatting and punctuation rules.",
+            "Master the tripartite structure (topic sentence, supporting sentences, concluding sentence).",
+            "Write listing, reason/example, and opinion paragraphs."
+        ],
+        tblt: {
+            pre: "Pre-task text reading and outline drafting.",
+            task: "Task execution through handwritten/digital compositions, instructor feedback loops, and structured peer-review critique.",
+            post: "Post-task final draft polishing."
+        },
+        assessment: "In-Class Compositions (50% based on structured draft finalizations) and Final Examination (50% multiple-choice and short-answer questions).",
+        edtech: "Process-writing drafting templates, digital peer-review logs, and feedback integration platforms."
     }
 ];
 
