@@ -5,7 +5,7 @@ An advanced professional portfolio showcasing evidence-based curriculum design, 
 
 🚀 **Overview**
 
-This portfolio bridges rigorous Second Language Acquisition (SLA) research, outcome-based education (OBE), and modern web-native engineering. Designed for post-secondary academic appointments, EAP/ESP pathway programs, and educational technology collaborations, it features 32 fully-articulated course specifications and interactive diagnostic tools.
+This portfolio bridges rigorous Second Language Acquisition (SLA) research, outcome-based education (OBE), and modern web-native engineering. Designed for post-secondary academic appointments, EAP/ESP pathway programs, and educational technology collaborations, it features fully-articulated course specifications and interactive diagnostic tools.
 
 🛠️ **Core Capabilities**
 
