@@ -3,24 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leonildo Alexandre Morgado | Academic & Instructional Design Portfolio</title>
+<title>Academic & Instructional Design Portfolio</title>
 <!-- Tailwind CSS CDN for zero-setup, modern styling -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- WebLLM Browser Runtime SDK -->
-<script type="module">
-  import * as webllm from "https://esm.run/@mlc-ai/web-llm";
-  window.webllm = webllm;
-</script>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
 <!-- NAVIGATION BAR -->
 <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-800">
 <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
 <span class="font-bold text-xl tracking-tight text-indigo-400">Leonildo Alexandre Morgado</span>
-<div class="space-x-6 text-sm font-medium hidden md:block">
+<div class="space-x-6 text-sm font-medium">
 <a href="#philosophy" class="hover:text-indigo-400 transition">Philosophy</a>
 <a href="#flagship" class="hover:text-indigo-400 transition">H5P Cohort Engine</a>
-<a href="#advisor" class="hover:text-indigo-400 transition text-indigo-400 font-semibold flex items-center gap-1.5 inline-flex"><span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span> AI Advisor</a>
 <a href="#research" class="hover:text-indigo-400 transition">Research</a>
 <a href="#artifacts" class="hover:text-indigo-400 transition">Artifacts</a>
 <a href="#cv" class="hover:text-indigo-400 transition">CV</a>
@@ -28,7 +22,6 @@
 </div>
 </div>
 </nav>
-
 <!-- TEACHING PHILOSOPHY SECTION -->
 <section id="philosophy" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
 <div class="flex flex-col md:flex-row items-start md:items-center gap-10 mb-12">
@@ -83,7 +76,6 @@ I leverage Learning Management Systems (Canvas/Blackboard) and interactive digit
 </div>
 </div>
 </section>
-
 <!-- FLAGSHIP ARTIFACT SECTION -->
 <section id="flagship" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
 <div class="mb-10">
@@ -125,53 +117,6 @@ Automatically pairs and groups learners into heterogenous or homogenous cohorts 
 </div>
 </div>
 </section>
-
-<!-- FINE-TUNED WEBLLM AI ADVISOR SECTION -->
-<section id="advisor" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
-<div class="max-w-3xl mb-8">
-<span class="inline-block py-1 px-3 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
-In-Browser AI Integration
-</span>
-<h2 class="text-3xl font-bold mb-4">PASTEL Fine-Tuned Advisor</h2>
-<p class="text-slate-300 text-base leading-relaxed">
-Chat directly with my fine-tuned <code class="text-indigo-400 bg-slate-800 px-2 py-0.5 rounded">pastel-advisor-qwen2.5</code> model. Powered by WebGPU and WebLLM, the model runs entirely inside your browser cache with zero external API calls or data logging.
-</p>
-</div>
-
-<!-- Chat Interface Container -->
-<div class="bg-slate-800/70 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden max-w-4xl mx-auto">
-  <!-- Chat Header -->
-  <div class="bg-slate-900 px-6 py-4 border-b border-slate-700 flex justify-between items-center">
-    <div class="flex items-center gap-3">
-      <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" id="status-indicator"></div>
-      <span class="font-bold text-sm text-white">PASTEL Pedagogical & Consulting Advisor</span>
-    </div>
-    <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded border border-slate-700" id="engine-status">Not Initialized</span>
-  </div>
-
-  <!-- Initialization Banner / Load Button -->
-  <div id="init-banner" class="p-8 text-center bg-slate-900/50">
-    <p class="text-slate-300 text-sm mb-4">Click below to load the fine-tuned 1.5B model into your browser memory via WebGPU (~1.1 GB cached locally).</p>
-    <button onclick="initWebLLM()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg text-sm">
-      Initialize AI Advisor in Browser
-    </button>
-  </div>
-
-  <!-- Messages Box -->
-  <div id="chat-messages" class="p-6 h-96 overflow-y-auto space-y-4 hidden flex flex-col bg-slate-950/50 font-sans text-sm">
-    <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl max-w-xl text-slate-200">
-      <strong>PASTEL Advisor:</strong> Hello! I am the fine-tuned assistant representing Leonildo Alexandre Morgado's pedagogical frameworks, EAP curriculum design, and TBLT methodology. How can I assist you with instructional design or course architecture today?
-    </div>
-  </div>
-
-  <!-- Chat Input Bar -->
-  <div id="chat-input-bar" class="p-4 bg-slate-900 border-t border-slate-700 flex gap-3 hidden">
-    <input type="text" id="user-input" placeholder="Ask about TBLT frameworks, EAP syllabi, or course pricing..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-indigo-500" onkeydown="if(event.key==='Enter') sendChatMessage()">
-    <button onclick="sendChatMessage()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition text-sm">Send</button>
-  </div>
-</div>
-</section>
-
 <!-- RESEARCH STATEMENT SECTION -->
 <section id="research" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
 <div class="max-w-3xl mb-12">
@@ -216,7 +161,6 @@ Developing response-reactive diagnostic tools that evaluate real-time proficienc
 </div>
 </div>
 </section>
-
 <!-- INSTRUCTIONAL DESIGN & TBLT ARTIFACTS MATRIX -->
 <section id="artifacts" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
 <div class="max-w-3xl mb-8">
@@ -254,7 +198,6 @@ Specialized EAP & Professional English (5)
 <!-- Rendered dynamically by JavaScript script below -->
 </div>
 </section>
-
 <!-- ARTIFACT SPECIFICATION MODAL CONTAINER -->
 <div id="course-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
 <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-8 transform transition-all">
@@ -309,7 +252,6 @@ Close Specification
 </div>
 </div>
 </div>
-
 <!-- CV -->
 <section id="cv" class="max-w-6xl mx-auto px-6 py-20 border-b border-slate-800">
 <h2 class="text-3xl font-bold mb-6">Curriculum Vitae</h2>
@@ -323,7 +265,6 @@ Download PDF CV
 </a>
 </div>
 </section>
-
 <!-- CONTACT & PROFILES SECTION -->
 <section id="contact" class="max-w-6xl mx-auto px-6 py-20">
 <div class="max-w-3xl mb-12">
@@ -371,105 +312,10 @@ Send Direct Email
 </form>
 </div>
 </section>
-
 <!-- FOOTER -->
 <footer class="border-t border-slate-800 text-center py-8 text-xs text-slate-500">
-Hosted on GitHub Pages • Built with HTML5 & Tailwind CSS & WebLLM
+Hosted on GitHub Pages • Built with HTML5 & Tailwind CSS
 </footer>
-
-<!-- WEBLLM CLIENT CONTROLLER SCRIPT -->
-<script>
-let engine = null;
-
-async function initWebLLM() {
-    const banner = document.getElementById("init-banner");
-    const statusText = document.getElementById("engine-status");
-    const indicator = document.getElementById("status-indicator");
-    const chatBox = document.getElementById("chat-messages");
-    const inputBar = document.getElementById("chat-input-bar");
-
-    banner.innerHTML = `<p class="text-indigo-400 text-sm font-semibold animate-pulse">Initializing WebLLM and downloading sharded model from Hugging Face... Please wait.</p>`;
-    statusText.innerText = "Downloading & Loading Weights...";
-
-    try {
-        const appConfig = {
-            model_list: [
-                {
-                    model: "https://huggingface.co/leonildoalexandremorgado/pastel-advisor-qwen2.5",
-                    model_id: "pastel-advisor-qwen2.5",
-                    model_lib: webllm.modelLibURLDefault,
-                    overrides: { context_window_size: 2048 }
-                }
-            ]
-        };
-
-        engine = await webllm.CreateMLCEngine(
-            "pastel-advisor-qwen2.5",
-            {
-                appConfig: appConfig,
-                initProgressCallback: (report) => {
-                    banner.innerHTML = `<p class="text-indigo-400 text-sm font-semibold">${report.text}</p>`;
-                }
-            }
-        );
-
-        banner.style.display = "none";
-        chatBox.classList.remove("hidden");
-        inputBar.classList.remove("hidden");
-        statusText.innerText = "Online (WebGPU Active)";
-        indicator.className = "w-3 h-3 rounded-full bg-emerald-500";
-    } catch (err) {
-        console.error(err);
-        banner.innerHTML = `<p class="text-red-400 text-sm">Failed to initialize WebLLM. Ensure your browser supports WebGPU (Chrome/Edge/Firefox nightly).</p>`;
-        statusText.innerText = "Initialization Error";
-        indicator.className = "w-3 h-3 rounded-full bg-red-500";
-    }
-}
-
-async function sendChatMessage() {
-    const inputField = document.getElementById("user-input");
-    const chatBox = document.getElementById("chat-messages");
-    const prompt = inputField.value.trim();
-    if (!prompt || !engine) return;
-
-    // Append user message
-    const userDiv = document.createElement("div");
-    userDiv.className = "bg-indigo-600/30 border border-indigo-500/40 p-4 rounded-xl max-w-xl ml-auto text-slate-100";
-    userDiv.innerHTML = `<strong>You:</strong> ${escapeHTML(prompt)}`;
-    chatBox.appendChild(userDiv);
-    inputField.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // Append assistant placeholder
-    const aiDiv = document.createElement("div");
-    aiDiv.className = "bg-slate-800/80 border border-slate-700 p-4 rounded-xl max-w-xl text-slate-200";
-    aiDiv.innerHTML = `<strong>PASTEL Advisor:</strong> <span class="animate-pulse text-indigo-400">Thinking...</span>`;
-    chatBox.appendChild(aiDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    try {
-        const messages = [
-            { role: "system", content: "You are the PASTEL pedagogical and instructional design advisor, trained on Leonildo Alexandre Morgado's academic frameworks, TBLT principles, and EAP syllabus designs." },
-            { role: "user", content: prompt }
-        ];
-
-        const reply = await engine.chat.completions.create({ messages });
-        const responseText = reply.choices[0].message.content;
-        aiDiv.innerHTML = `<strong>PASTEL Advisor:</strong> ${escapeHTML(responseText)}`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-    } catch (err) {
-        aiDiv.innerHTML = `<strong>PASTEL Advisor:</strong> <span class="text-red-400">Error generating response.</span>`;
-        console.error(err);
-    }
-}
-
-function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-    );
-}
-</script>
-
 <!-- 32 COURSES DATA & MODAL CONTROLLER SCRIPT -->
 <script>
 const coursesData = [
@@ -1179,7 +1025,6 @@ function renderCourseGrid(filteredData) {
         grid.appendChild(card);
     });
 }
-
 // FILTER COURSES BY CATEGORY
 function filterCourses(category) {
     const buttons = document.querySelectorAll("#course-filter-bar button");
@@ -1194,7 +1039,6 @@ function filterCourses(category) {
         renderCourseGrid(filtered);
     }
 }
-
 // OPEN SPECIFICATION MODAL
 function openCourseModal(courseId) {
     const course = coursesData.find(c => c.id === courseId);
@@ -1204,7 +1048,6 @@ function openCourseModal(courseId) {
     document.getElementById("modal-level").innerText = course.level;
     document.getElementById("modal-title").innerText = course.title;
     document.getElementById("modal-description").innerText = course.summary;
-    
     // Render CLOs
     const closList = document.getElementById("modal-clos");
     closList.innerHTML = "";
@@ -1214,7 +1057,6 @@ function openCourseModal(courseId) {
         li.innerHTML = `<span class="text-indigo-400 font-bold">•</span> <span>${clo}</span>`;
         closList.appendChild(li);
     });
-
     // Render TBLT Task Cycle
     const tbltContainer = document.getElementById("modal-tblt");
     tbltContainer.innerHTML = `
@@ -1231,15 +1073,14 @@ function openCourseModal(courseId) {
     document.getElementById("modal-assessment").innerText = course.assessment;
     document.getElementById("modal-edtech").innerText = course.edtech;
     document.getElementById("course-modal").classList.remove("hidden");
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden"; // Lock background scroll
 }
-
 // CLOSE MODAL
 function closeCourseModal() {
     document.getElementById("course-modal").classList.add("hidden");
     document.body.style.overflow = "auto";
 }
-
+// CLOSE MODAL ON BACKDROP CLICK OR ESCAPE KEY
 window.addEventListener("click", (e) => {
     const modal = document.getElementById("course-modal");
     if (e.target === modal) closeCourseModal();
@@ -1247,7 +1088,7 @@ window.addEventListener("click", (e) => {
 window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeCourseModal();
 });
-
+// INITIAL RENDER ON PAGE LOAD
 document.addEventListener("DOMContentLoaded", () => {
     renderCourseGrid(coursesData);
 });
